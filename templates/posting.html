@@ -11,7 +11,7 @@
             crossorigin="anonymous"></script>
     <style>
         .wrap {
-            height: 500px;
+            height: 400px;
             width: 1000px;
             margin: auto;
 
@@ -23,21 +23,24 @@
             border-radius: 10px;
             border: 2px solid black;
         }
+
         .wrap > img {
             height: 300px;
             width: 300px;
             margin-right: 5px;
         }
+
         .input-box {
-            height: 480px;
+            height: 380px;
             width: 680px;
 
             border-radius: 10px;
             border: 2px solid black;
 
-            padding-top: 130px;
+            padding-top: 100px;
 
         }
+
         .input-g {
             display: flex;
             flex-direction: row;
@@ -47,6 +50,135 @@
             margin-top: 10px;
             margin-bottom: 10px;
         }
+
+        .card {
+            max-width: 1200px;
+            width: 95%;
+            height: 300px;
+
+
+            margin: 20px auto 0px auto;
+
+            display: flex;
+            flex-direction: row;
+            justify-content: left;
+            align-items: center;
+
+            border-radius: 10px;
+            border: 2px solid black;
+        }
+
+        .card-left {
+            display: flex;
+            flex-direction: column;
+            justify-content: left;
+            align-items: center;
+
+            height: 300px;
+        }
+
+        .card-right {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            margin: auto;
+
+            height: 300px;
+        }
+
+        .card-right > button {
+            margin: 10px auto 10px auto;
+            height: 100px;
+            width: 160px;
+        }
+
+        .card-top {
+            display: flex;
+            flex-direction: row;
+            justify-content: left;
+            align-items: center;
+
+            margin-top: 10px;
+        }
+
+        .Rname {
+            width: 450px;
+            height: 40px;
+            margin-left: 20px;
+
+            justify-content: center;
+            display: flex;
+            align-items: center;
+
+            border-radius: 10px;
+            border: 2px solid black;
+        }
+
+        .Uname {
+            width: 450px;
+            height: 40px;
+            margin-left: 10px;
+
+            justify-content: center;
+            display: flex;
+            align-items: center;
+
+            border-radius: 10px;
+            border: 2px solid black;
+        }
+
+        .card-bottom {
+            display: flex;
+            flex-direction: row;
+            justify-content: left;
+            align-items: center;
+
+            position: absolute;
+            bottom: 10px;
+        }
+
+        .time {
+            width: 450px;
+            height: 40px;
+            margin-left: 20px;
+
+            justify-content: center;
+            display: flex;
+            align-items: center;
+
+            border-radius: 10px;
+            border: 2px solid black;
+        }
+
+        .nums {
+            width: 450px;
+            height: 40px;
+            margin-left: 10px;
+
+            justify-content: center;
+            display: flex;
+            align-items: center;
+
+            border-radius: 10px;
+            border: 2px solid black;
+        }
+
+        .descript {
+            height: 175px;
+            width: 910px;
+            margin-left: 20px;
+            display: flex;
+            justify-content: left;
+            align-items: center;
+
+            margin-top: 10px;
+
+            border-radius: 10px;
+            border: 2px solid black;
+        }
+
     </style>
 </head>
 <body>
@@ -62,14 +194,71 @@
             <textarea class="form-control" aria-label="With textarea"></textarea>
         </div>
         <div class="input-g">
-        <input type='date'>
-        <input type='time'>
-        <input type='number' min='2'>
+            <input type='date'>
+            <input type='time'>
+            <input type='number' min='2'>
         </div>
         <div class="d-grid gap-2 col-6 mx-auto">
             <button class="btn btn-primary" type="button">모집하기</button>
         </div>
     </div>
 </div>
+
+<div class="card">
+    <div class="card-left">
+        <div class="card-top">
+            <div class="Rname">
+                <h4>게임방 이름</h4>
+            </div>
+            <div class="Uname">
+                <h4><i>유저이름</i></h4>
+            </div>
+        </div>
+        <div class="descript">
+            <h5>본문내용</h5>
+        </div>
+        <div class="card-bottom">
+            <div class="time">
+                <h4>2022.07.11. / 17:11</h4>
+            </div>
+            <div class="nums">
+                <h4>5/8</h4>
+            </div>
+        </div>
+    </div>
+    <div class="card-right">
+        <button type="button" class="btn btn-outline-primary">참가하기</button>
+        <button type="button" class="btn btn-outline-dark">멤버보기</button>
+    </div>
+</div>
+<div class="card">
+    <div class="card-left">
+        <div class="card-top">
+            <div class="Rname">
+                <h4>게임방 이름</h4>
+            </div>
+            <div class="Uname">
+                <h4><i>유저이름</i></h4>
+            </div>
+        </div>
+        <div class="descript">
+            <h5>본문내용</h5>
+        </div>
+        <div class="card-bottom">
+            <div class="time">
+                <h4>2022.07.11. / 17:11</h4>
+            </div>
+            <div class="nums" style="border-color:red">
+                <h4 style="color:red">마감</h4>
+            </div>
+        </div>
+    </div>
+    <div class="card-right">
+        <button type="button" class="btn btn-outline-danger">취소하기</button>
+        <button type="button" class="btn btn-outline-dark">멤버보기</button>
+    </div>
+</div>
+
+
 </body>
 </html>
