@@ -244,7 +244,7 @@
                             let party = rows[i]['participate']
 
                             let already = ''
-                            if (party.includes(me)) already = '<button type="button" class="btn btn-outline-primary">참가하기</button>'
+                            if (!party.includes(me)) already = '<button type="button" class="btn btn-outline-primary">참가하기</button>'
                             else already = '<button type="button" class="btn btn-outline-danger">취소하기</button>'
 
                             let check = false
@@ -302,7 +302,7 @@
                                             </div>
                                         </div>`
                             } else {
-                                if (party.includes(me)) already = '<button type="button" class="btn btn-outline-primary" disabled>참가하기</button>'
+                                if (!party.includes(me)) already = '<button type="button" class="btn btn-outline-primary" disabled>참가하기</button>'
                                 else already = '<button type="button" class="btn btn-outline-danger">취소하기</button>'
                                 temp_html = `<div class="card">
                                             <div class="card-left">
