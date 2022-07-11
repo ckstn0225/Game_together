@@ -10,11 +10,31 @@
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
             crossorigin="anonymous"></script>
     <style>
-        .login {
+        .top {
             display: flex;
             flex-direction: row;
-            justify-content: right;
             align-items: center;
+            justify-content: space-between;
+        }
+        .login {
+            justify-content: right;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+        .back-btn {
+            justify-content: left;
+
+            margin-left: 10px;
+            height: 50px;
+            width: 150px;
+            border-radius: 20px;
+
+            background-color: transparent;
+            border: 2px solid black;
+        }
+        .back-btn:hover {
+            border: 3px solid black;
         }
         .wrap {
             height: 400px;
@@ -234,6 +254,7 @@
                     for (let i = 0; i < rows.length; i++) {
                         let gname = rows[i]['gname']
                         if (gn == gname) {
+                            let rid = rows[i]['rid']
                             let title = rows[i]['title']
                             let desc = rows[i]['desc']
                             let totalnum = rows[i]['totalnum']
@@ -243,9 +264,6 @@
                             let nick = rows[i]['nick']
                             let party = rows[i]['participate']
 
-                            let already = ''
-                            if (!party.includes(me)) already = '<button type="button" class="btn btn-outline-primary">참가하기</button>'
-                            else already = '<button type="button" class="btn btn-outline-danger">취소하기</button>'
 
                             let check = false
                             let dInfo = ddate.split('-')
@@ -272,9 +290,9 @@
 
 
                             let temp_html = ``
-
-                            if (check) {
-                                temp_html = `<div class="card">
+                            if (!party.includes(me)){
+                                if(check){
+                                    temp_html = `<div class="card">
                                             <div class="card-left">
                                                 <div class="card-top">
                                                     <div class="Rname">
@@ -297,14 +315,13 @@
                                                 </div>
                                             </div>
                                             <div class="card-right">
-                                                ${already}
+                                                <button type="button" class="btn btn-outline-primary" onclick="participate(${rid})">참가하기</button>
                                                 <button type="button" class="btn btn-outline-dark">멤버보기</button>
                                             </div>
                                         </div>`
-                            } else {
-                                if (!party.includes(me)) already = '<button type="button" class="btn btn-outline-primary" disabled>참가하기</button>'
-                                else already = '<button type="button" class="btn btn-outline-danger">취소하기</button>'
-                                temp_html = `<div class="card">
+                                }
+                                else{
+                                        temp_html = `<div class="card">
                                             <div class="card-left">
                                                 <div class="card-top">
                                                     <div class="Rname">
@@ -327,10 +344,72 @@
                                                 </div>
                                             </div>
                                             <div class="card-right">
-                                                ${already}
+                                                <button type="button" class="btn btn-outline-primary" disabled>참가하기</button>
                                                 <button type="button" class="btn btn-outline-dark">멤버보기</button>
                                             </div>
                                         </div>`
+                                }
+                            }
+                            else {
+                                if(check){
+                                    temp_html = `<div class="card">
+                                            <div class="card-left">
+                                                <div class="card-top">
+                                                    <div class="Rname">
+                                                        <h4>${title}</h4>
+                                                    </div>
+                                                    <div class="Uname">
+                                                        <h4><i>${nick}</i></h4>
+                                                    </div>
+                                                </div>
+                                                <div class="descript">
+                                                    <h5>${desc}</h5>
+                                                </div>
+                                                <div class="card-bottom">
+                                                    <div class="time">
+                                                        <h4>${ddate}/${dtime}</h4>
+                                                    </div>
+                                                    <div class="nums">
+                                                        <h4>${num}/${totalnum}</h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-right">
+                                                <button type="button" class="btn btn-outline-danger" onclick="leave(${rid})">취소하기</button>
+                                                <button type="button" class="btn btn-outline-dark">멤버보기</button>
+                                            </div>
+                                        </div>`
+                                }
+                                else{
+                                        temp_html = `<div class="card">
+                                            <div class="card-left">
+                                                <div class="card-top">
+                                                    <div class="Rname">
+                                                        <h4>${title}</h4>
+                                                    </div>
+                                                    <div class="Uname">
+                                                        <h4><i>${nick}</i></h4>
+                                                    </div>
+                                                </div>
+                                                <div class="descript">
+                                                    <h5>${desc}</h5>
+                                                </div>
+                                                <div class="card-bottom">
+                                                    <div class="time">
+                                                        <h4>${ddate}/${dtime}</h4>
+                                                    </div>
+                                                    <div class="nums" style="border-color:red">
+                                                        <h4 style="color:red">마감</h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-right">
+                                                <button type="button" class="btn btn-outline-danger" onclick="leave(${rid})">취소하기</button>
+                                                <button type="button" class="btn btn-outline-dark">멤버보기</button>
+                                            </div>
+                                        </div>`
+                                }
+
                             }
                             $('#main').append(temp_html)
                         }
@@ -338,13 +417,45 @@
                 }
             });
         }
+
+        function participate(id) {
+            let nick = $('#nick').text()
+            console.log(id,nick)
+            $.ajax({
+                type: "POST",
+                url: "/room/in",
+                data: {rid_give: id, nick_give: nick},
+                success: function (response) {
+                    alert(response["msg"])
+                    window.location.reload()
+                }
+            });
+        }
+
+        function leave(id){
+            let nick = $('#nick').text()
+            $.ajax({
+                type: "POST",
+                url: "/room/out",
+                data: {rid_give: id, nick_give: nick},
+                success: function (response) {
+                    alert(response["msg"])
+                    window.location.reload()
+                }
+            });
+        }
+
     </script>
 </head>
 <body>
-<div class="login">
-    <h1 id="nick">닉네임</h1>
-    <h1>으로 접속중</h1>
+<div class="top">
+    <button class="back-btn" onclick='window.location.href = "/gamelist"';>뒤로가기</button>
+    <div class="login">
+       <h1 id="nick">닉네임</h1>
+        <h1>으로 접속중</h1>
+    </div>
 </div>
+
 <div class="wrap">
     <div class="img-box" style="background-image:url('https://t1.daumcdn.net/cfile/tistory/2463694C53D0A5D806')">
         <h3 id="gname">게임이름</h3>

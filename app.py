@@ -76,6 +76,31 @@ def room_get():
     room_list = list(db.room.find({},{'_id':False}))
     return jsonify({'room':room_list})
 
+##참가및 취소
+@app.route("/room/in", methods=["POST"])
+def room_in():
+    rid_receive = request.form['rid_give']
+    nick_receive = request.form['nick_give']
+    room = db.room.find_one({'rid': int(rid_receive)})
+    num = room['num'] + 1
+    party = room['participate']
+    party.append(nick_receive)
+    db.room.update_one({'rid': int(rid_receive)}, {'$set': {'num': num}})
+    db.room.update_one({'rid': int(rid_receive)}, {'$set': {'participate': party}})
+    return jsonify({'msg': '참가 완료!'})
+
+@app.route("/room/out", methods=["POST"])
+def room_out():
+    rid_receive = request.form['rid_give']
+    nick_receive = request.form['nick_give']
+    room = db.room.find_one({'rid': int(rid_receive)})
+    num = room['num'] - 1
+    party = room['participate']
+    party.remove(nick_receive)
+    db.room.update_one({'rid': int(rid_receive)}, {'$set': {'num': num}})
+    db.room.update_one({'rid': int(rid_receive)}, {'$set': {'participate': party}})
+    return jsonify({'msg': '취소 완료!'})
+
 #game 이름과 image를 POST
 @app.route("/game", methods=["POST"])
 def game_post():
