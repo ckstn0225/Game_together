@@ -10,6 +10,12 @@
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
             crossorigin="anonymous"></script>
     <style>
+        .login {
+            display: flex;
+            flex-direction: row;
+            justify-content: right;
+            align-items: center;
+        }
         .wrap {
             height: 400px;
             width: 1000px;
@@ -24,12 +30,6 @@
             border: 2px solid black;
         }
 
-        .wrap > img {
-            height: 300px;
-            width: 300px;
-            margin-right: 5px;
-        }
-
         .img-box {
             background-position: center;
             background-size: cover;
@@ -38,6 +38,12 @@
             margin-right: 5px;
             border-radius: 10px;
             border: 1px solid black;
+
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+
         }
         .input-box {
             height: 380px;
@@ -189,30 +195,181 @@
         }
 
     </style>
+    <script>
+        $(document).ready(function () {
+            show_room()
+        });
+
+        function save_room() {
+            let gname = $('#gname').text()
+            let title = $('#gtitle').val()
+            let desc = $('#desc').val()
+            let totalnum = $('#totalnum').val()
+            let ddate = $('#dday').val()
+            let dtime = $('#dtime').val()
+            let nick = $('#nick').text()
+
+            $.ajax({
+                type: 'POST',
+                url: '/room',
+                data: {gname_give: gname, title_give: title, desc_give: desc, totalnum_give: totalnum,
+                 date_give: ddate, time_give: dtime, nick_give: nick},
+                success: function (response) {
+                    alert(response['msg'])
+                    window.location.reload()
+                }
+            })
+        }
+
+        function show_room() {
+            $('#main').empty()
+            $.ajax({
+                type: "GET",
+                url: "/room",
+                data: {},
+                success: function (response) {
+                    let rows = response['room']
+                    let me = $('#nick').text()
+                    let gn = $('#gname').text()
+                    for (let i = 0; i < rows.length; i++) {
+                        let gname = rows[i]['gname']
+                        if (gn == gname) {
+                            let title = rows[i]['title']
+                            let desc = rows[i]['desc']
+                            let totalnum = rows[i]['totalnum']
+                            let num = rows[i]['num']
+                            let ddate = rows[i]['date']
+                            let dtime = rows[i]['time']
+                            let nick = rows[i]['nick']
+                            let party = rows[i]['participate']
+
+                            let already = ''
+                            if (party.includes(me)) already = '<button type="button" class="btn btn-outline-primary">참가하기</button>'
+                            else already = '<button type="button" class="btn btn-outline-danger">취소하기</button>'
+
+                            let check = false
+                            let dInfo = ddate.split('-')
+                            let tInfo = dtime.split(':')
+
+                            let nd = new Date()
+                            let nInfo = []
+                            nInfo.push(nd.getFullYear())
+                            nInfo.push(nd.getMonth() + 1)
+                            nInfo.push(nd.getDate())
+                            nInfo.push(nd.getHours())
+                            nInfo.push(nd.getMinutes())
+
+
+                            if (dInfo[0] > nInfo[0]) check = true
+                            else if (dInfo[1] > nInfo[1]) check = true
+                            else if (dInfo[2] > nInfo[2]) check = true
+                            else if (tInfo[0] > nInfo[3]) check = true
+                            else if (tInfo[1] >= nInfo[4]) check = true
+                            else check = false
+
+                            if (num < totalnum) check = true
+                            else check = false
+
+
+                            let temp_html = ``
+
+                            if (check) {
+                                temp_html = `<div class="card">
+                                            <div class="card-left">
+                                                <div class="card-top">
+                                                    <div class="Rname">
+                                                        <h4>${title}</h4>
+                                                    </div>
+                                                    <div class="Uname">
+                                                        <h4><i>${nick}</i></h4>
+                                                    </div>
+                                                </div>
+                                                <div class="descript">
+                                                    <h5>${desc}</h5>
+                                                </div>
+                                                <div class="card-bottom">
+                                                    <div class="time">
+                                                        <h4>${ddate}/${dtime}</h4>
+                                                    </div>
+                                                    <div class="nums">
+                                                        <h4>${num}/${totalnum}</h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-right">
+                                                ${already}
+                                                <button type="button" class="btn btn-outline-dark">멤버보기</button>
+                                            </div>
+                                        </div>`
+                            } else {
+                                if (party.includes(me)) already = '<button type="button" class="btn btn-outline-primary" disabled>참가하기</button>'
+                                else already = '<button type="button" class="btn btn-outline-danger">취소하기</button>'
+                                temp_html = `<div class="card">
+                                            <div class="card-left">
+                                                <div class="card-top">
+                                                    <div class="Rname">
+                                                        <h4>${title}</h4>
+                                                    </div>
+                                                    <div class="Uname">
+                                                        <h4><i>${nick}</i></h4>
+                                                    </div>
+                                                </div>
+                                                <div class="descript">
+                                                    <h5>${desc}</h5>
+                                                </div>
+                                                <div class="card-bottom">
+                                                    <div class="time">
+                                                        <h4>${ddate}/${dtime}</h4>
+                                                    </div>
+                                                    <div class="nums" style="border-color:red">
+                                                        <h4 style="color:red">마감</h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-right">
+                                                ${already}
+                                                <button type="button" class="btn btn-outline-dark">멤버보기</button>
+                                            </div>
+                                        </div>`
+                            }
+                            $('#main').append(temp_html)
+                        }
+                    }
+                }
+            });
+        }
+    </script>
 </head>
 <body>
+<div class="login">
+    <h1 id="nick">닉네임</h1>
+    <h1>으로 접속중</h1>
+</div>
 <div class="wrap">
-    <div class="img-box" style="background-image:url('https://t1.daumcdn.net/cfile/tistory/2463694C53D0A5D806')"></div>
+    <div class="img-box" style="background-image:url('https://t1.daumcdn.net/cfile/tistory/2463694C53D0A5D806')">
+        <h3 id="gname">게임이름</h3>
+    </div>
     <div class="input-box">
         <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon1">방 이름</span>
-            <input type="text" class="form-control" aria-describedby="basic-addon1">
+            <input type="text" class="form-control" aria-describedby="basic-addon1" id="gtitle">
         </div>
         <div class="input-group">
             <span class="input-group-text">본문</span>
-            <textarea class="form-control" aria-label="With textarea"></textarea>
+            <textarea class="form-control" aria-label="With textarea" id="desc"></textarea>
         </div>
         <div class="input-g">
-            <input type='date'>
-            <input type='time'>
-            <input type='number' min='2'>
+            <input type='date' id="dday">
+            <input type='time' id="dtime">
+            <input type='number' min='2' id="totalnum">
         </div>
         <div class="d-grid gap-2 col-6 mx-auto">
-            <button class="btn btn-primary" type="button">모집하기</button>
+            <button class="btn btn-primary" type="button" onclick="save_room()">모집하기</button>
         </div>
     </div>
 </div>
 
+<div id="main">
 <div class="card">
     <div class="card-left">
         <div class="card-top">
@@ -267,7 +424,7 @@
         <button type="button" class="btn btn-outline-dark">멤버보기</button>
     </div>
 </div>
-
+</div>
 
 </body>
 </html>
