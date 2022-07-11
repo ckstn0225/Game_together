@@ -15,6 +15,22 @@ db = client.dbsparta
 def home():
    return render_template('login.html')
 
+@app.route('/gamelist')
+def gamelist():
+   return render_template('gamelist.html')
+
+@app.route('/makegamelist')
+def mkgame():
+   return render_template('makegamelist.html')
+
+@app.route('/membership')
+def membership():
+   return render_template('membership.html')
+
+@app.route('/posting')
+def posting():
+   return render_template('posting.html')
+
 @app.route('/memo', methods=['GET'])
 def listing():
     return jsonify({'all_articles':articles})
