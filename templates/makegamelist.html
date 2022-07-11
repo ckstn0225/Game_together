@@ -10,12 +10,80 @@
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
             crossorigin="anonymous"></script>
     <style>
+        .mygame {
+            width: 95%;
+            max-width: 500px;
+            margin: 20px auto 20px auto;
 
+            box-shadow: 0px 0px 3px 0px black;
+            padding: 20px;
+        }
     </style>
+    <script>
+        $(document).ready(function () {
+            listing();
+        });
+        function listing() {
+            $('#game').empty()
+            let start_html = `<option selected>-- 게임 선택하기 --</option>`
+            $('#game').append(start_html)
+            $.ajax({
+                type: "GET",
+                url: "/game",
+                data: {},
+                success: function (response) {
+                    let count = 0
+                    let rows = response['game']
+                    for(count = 0; count < rows.length; count++) {
+                        let gname = rows[i]['gname']
+
+                        let temp_html = `<option value="${count}">${gname}</option>`
+                        $('#game').append(temp_html)
+                    }
+                    let end_html = `<option value="${count+1}">기타</option>`
+                    $('#game').append(end_html)
+                }
+            })
+
+        }
+        // '기타' 선택했는지 여부 확인
+        function select_game() {
+            let selectedNum = document.getElementById('game').value
+            console.log(selectedNum, document.getElementById('game').length)
+            if (selectedNum == document.getElementById('game').length-1) {
+                $('#newGame').removeAttr('hidden','true')
+                $('#newGameName').removeAttr('hidden','true')
+            } else {
+                $('#newGame').attr('hidden','true')
+                $('#newGameName').attr('hidden','true')
+            }
+        }
+        function add_image() {
+            alert('아직 기능 미구현입니다.')
+        }
+        function add_game() {
+            let gname = $('#newGame').text()
+            // 이미지 추가 구현 필요 - hoisub
+            // let image = $('#image').val()
+
+            alert('아직 기능 미구현입니다. 이전화면으로 돌아갑니다.')
+        }
+    </script>
 </head>
 <body>
-<a href="/gamelist">
-    <button style="clear:both; float:right; ">게임목록으로 돌아가기</button>
-</a>
+    <div class="mygame">
+        <div class="input-group mb-3">
+            <select class="form-select" id="game" onchange="select_game()">
+            </select>
+        </div>
+        <div class="form-floating mb-3">
+            <input id="newGame" class="form-control" hidden="true">
+            <label id="newGameName" for="floatingInput" hidden="true">게임이름</label>
+        </div>
+        <button onclick="add_image()" type="button" class="btn btn-outline-dark">이미지 추가하기</button>
+        <a href="/gamelist">
+            <button onclick="add_game()" type="button" class="btn btn-outline-dark">개설하기</button>
+        </a>
+    </div>
 </body>
 </html>

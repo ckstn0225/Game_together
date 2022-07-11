@@ -76,6 +76,27 @@ def room_get():
     room_list = list(db.room.find({},{'_id':False}))
     return jsonify({'room':room_list})
 
+#game 이름과 image를 POST
+@app.route("/game", methods=["POST"])
+def game_post():
+    gname_receive = request.form['gname_give']
+    # 이미지 추가 구현 필요 - hoisub
+    image_receive = request.form['image_give']
+
+    doc = {
+        'gname': gname_receive,
+        # 이미지 추가 구현 필요 - hoisub
+        'image': image_receive
+    }
+    db.game.insert_one(doc)
+
+    return jsonify({'msg': '게임 목록 추가 완료!'})
+
+#game 이름과 image를 GET
+@app.route("/game", methods=["GET"])
+def game_get():
+    game_list = list(db.game.find({},{'_id':False}))
+    return jsonify({'game':game_list})
 
 if __name__ == '__main__':
    app.run('0.0.0.0',port=5000,debug=True)
