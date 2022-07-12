@@ -43,7 +43,7 @@
                 align-items: center;
                 justify-content: space-between;
 
-                margin-right: 10px;
+                width: 400px;
             }
 
             .container>.member-btn{
@@ -91,6 +91,9 @@
                                            placeholder="아이디를 입력하세요">
                                 </div>
                             </div>
+                            <div class="control-check" id="btn-check-id">
+                                <button class="button is-sparta" onclick="check_id()">중복확인</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -126,6 +129,9 @@
                                 <div class="control">
                                     <input type="text" class="input" id="usernick" placeholder="닉네임을 입력하세요">
                                 </div>
+                            </div>
+                            <div class="control-check" id="btn-check-nick">
+                                <button class="button is-sparta" onclick="check_id()">중복확인</button>
                             </div>
                         </div>
                     </div>
