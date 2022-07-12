@@ -1,6 +1,15 @@
-from flask import Flask, render_template, request, jsonify
+import jwt
+import datetime
+import hashlib
+from flask import Flask, render_template, jsonify, request, redirect, url_for
+from werkzeug.utils import secure_filename
+from datetime import datetime, timedelta
 
 app = Flask(__name__)
+
+app.config["TEMPLATES_AUTO_RELOAD"] = True
+app.config['UPLOAD_FOLDER'] = "./static/gamePics"
+SECRET_KEY = 'SPARTA'
 
 from pymongo import MongoClient
 import certifi
