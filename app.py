@@ -197,5 +197,16 @@ def game_get():
     game_list = list(db.game.find({},{'_id':False}))
     return jsonify({'game':game_list})
 
+#nick get[조원영]
+@app.route('/gamelist/<u_nick>')
+def nick_get(u_nick):
+    return render_template("gamelist.html", u_nick=u_nick)
+
+#user info get[조원영]
+@app.route('/gamelist/get_info')
+def info_get():
+    info_list = list(db.user.find({}, {'_id': False}))
+    return jsonify({'info': info_list})
+
 if __name__ == '__main__':
    app.run('0.0.0.0',port=5000,debug=True)
