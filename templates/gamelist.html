@@ -64,13 +64,28 @@
 
     </style>
     <script>
+         $(document).ready(function () {
+            show_order();
+        });
+
+        function show_order() {
+            $.ajax({
+                type: 'GET',
+                url: '/nickname_get',
+                data: {},
+                success: function (response) {
+                    console.log(response)
+
+            }}
+            )
+        }
 
     </script>
 
 </head>
 
 <body>
-<p style="float:right; font-size:40px;">안녕하세요! 닉네임님!</p>
+<p style="float:right; font-size:40px;">안녕하세요!님!</p>
 <br>
 <br>
 <br>
