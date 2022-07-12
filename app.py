@@ -65,8 +65,8 @@ def sign_in():
 # 회원가입
 @app.route('/api/membership', methods=['POST'])
 def sign_up():
-    username_receive = request.form['id_give']
-    password_receive = request.form['pw_give']
+    username_receive = request.form['username_give']
+    password_receive = request.form['password_give']
     nickname_receive = request.form['nickname_give']
     password_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
     doc = {
@@ -82,7 +82,8 @@ def sign_up():
 @app.route('/sign_up/check_id', methods=['POST'])
 def check_id():
     username_receive = request.form['username_give']
-    exists = bool(db.users.find_one({"username": username_receive}))
+    exists = bool(db.user.find_one({"u_id": username_receive}))
+    print(exists)
     return jsonify({'result': 'success', 'exists': exists})
 
 

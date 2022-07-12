@@ -53,8 +53,7 @@ function get_games() {
                 for (let i = 0; i < posts.length; i++) {
                     let gamename = posts[i]['G_name']
                     let gameimg = posts[i]['Img']
-                    let gameid = posts[i]['id']
-                    let html_temp = `<div class="card to_left" onclick='to_room("${gameid}")'>
+                    let html_temp = `<div class="card to_left" onclick='to_room("${gamename}")'>
                                         <div class="card-image">
                                             <img src="${gameimg}"
                                                  alt="Placeholder image">
@@ -73,17 +72,9 @@ function get_games() {
 
 //방으로 이동 시 방번호 지정
 function to_room(game) {
-        $.ajax({
-            type: "POST",
-            url: "/channel",
-            data: {
-                gamename_give: game
-            },
-            success: function (response) {
-                console.log(game)
+                window.location.href = `/posting/${game}`
             }
-        });
-}
+
 
 //로그아웃 및 쿠키삭제
 function sign_out() {
