@@ -53,26 +53,42 @@
             }
 
         </style>
-        <script>
+    <script>
 
             function register() {
-                $.ajax({
-                    type: "POST",
-                    url: "/api/register",
-                    data: {
-                        id_give: $('#userid').val(),
-                        pw_give: $('#userpw').val(),
-                        nickname_give: $('#usernick').val()
-                    },
-                    success: function (response) {
-                        if (response['result'] == 'success') {
-                            alert('회원가입이 완료되었습니다.')
-                            window.location.href = '/login'
-                        } else {
-                            alert(response['msg'])
+                let username = $("#input-username").val()
+                let password = $("#input-password").val()
+                let password2 = $("#input-password2").val()
+                console.log(username, password, password2)
+                if (password2 == "") {
+                    $("#help-password2").text("비밀번호를 입력해주세요.").removeClass("is-safe").addClass("is-danger")
+                    $("#input-password2").focus()
+                    return;
+                } else if (password2 != password) {
+                    $("#help-password2").text("비밀번호가 일치하지 않습니다.").removeClass("is-safe").addClass("is-danger")
+                    $("#input-password2").focus()
+                    return;
+                } else {
+                    $.ajax({
+                        type: "POST",
+                        url: "/api/membership",
+                        data: {
+                            id_give: $('#userid').val(),
+                            pw_give: $('#userpw').val(),
+                            nickname_give: $('#usernick').val()
+                        },
+                        success: function (response) {
+                            if (response['result'] == 'success') {
+                                alert('회원가입이 완료되었습니다.')
+                                window.location.replace = '/'
+                            } else {
+                                alert(response['msg'])
+                            }
+
                         }
-                    }
-                })
+                    })
+                }
+
             }
 
         </script>

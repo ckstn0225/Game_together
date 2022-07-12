@@ -1,0 +1,13 @@
+diff a/app.py b/app.py	(rejected hunks)
+@@ -13,11 +13,6 @@
+ 
+ SECRET_KEY = 'SPARTA'
+ 
+-from pymongo import MongoClient
+-import certifi
+-ca = certifi.where()
+-client = MongoClient('mongodb+srv://test:sparta@sparta.mtxvxou.mongodb.net/sparta?retryWrites=true&w=majority', tlsCAFile=ca)
+-db = client.dbsparta
+ client = MongoClient('mongodb://54.237.231.185', 27017, username="test", password="test")
+ db = client.dbsparta_plus_week4
+ 
