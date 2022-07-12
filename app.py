@@ -65,6 +65,7 @@ def sign_in():
 # 회원가입
 @app.route('/api/membership', methods=['POST'])
 def sign_up():
+    username_receive = request.form['id_give']
     password_receive = request.form['pw_give']
     nickname_receive = request.form['nickname_give']
     password_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
