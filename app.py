@@ -254,14 +254,21 @@ def room_showmember():
 # game 이름과 image를 POST
 @app.route("/game", methods=["POST"])
 def game_post():
-    gname_receive = request.form['gname_give']
-    # 이미지 추가 구현 필요 - hoisub
-    image_receive = request.form['image_give']
+    game_receive = request.form['game_give']
+
+    file = request.files["file_give"]
+
+    extension = file.filename.split('.')[-1]
+    today = datetime.now()
+    mytime = today.strftime('%Y-%m-%d-%H-%M-%S')
+    filename = f'file-{mytime}'
+
+    save_to = f'static/img/{filename}.{extension}'
+    file.save(save_to)
 
     doc = {
-        'gname': gname_receive,
-        # 이미지 추가 구현 필요 - hoisub
-        'image': image_receive
+        'game': game_receive,
+        'file': f'{filename}.{extension}'
     }
     db.game.insert_one(doc)
 
@@ -271,8 +278,8 @@ def game_post():
 # game 이름과 image를 GET
 @app.route("/game", methods=["GET"])
 def game_get():
-    game_list = list(db.games.find({}, {'_id': False}))
-    return jsonify({'game': game_list})
+    games = list(db.games.find({}, {'_id': False}))
+    return jsonify({'all_game': games})
 
 
 # user info get[조원영]
