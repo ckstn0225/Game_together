@@ -31,6 +31,8 @@
                 margin: auto 10px auto;
                 width: 50%;
                 box-shadow: 0px 0px 5px 0px;
+                max-height: 30%;
+                min-height: 90%;
             }
 
             .has-text-centered{
@@ -48,25 +50,37 @@
             {% endif %}
 
             function login() {
-                $.ajax({
-                    type: "POST",
-                    url: "/api/login",
-                    data: {
-                        id_give: $('#userid').val(),
-                        pw_give: $('#userpw').val()
-                    },
-                    success: function (response) {
-                        if (response['result'] == 'success') {
+                let username = $("#userid").val()
+                let password = $("#userpw").val()
 
-                            $.cookie('mytoken', response['token']);
-
-                            alert('로그인 완료!')
-                            window.location.href = ('/')
-                        } else {
-                            alert(response['msg'])
+                if (username == "") {
+                    alert("아이디를 입력해주세요.")
+                    return;
+                } else {
+                    if (password == "") {
+                    alert("비밀번호를 입력해주세요.")
+                    return;
+                    } else {
+                        $.ajax({
+                        type: "POST",
+                        url: "/api/login",
+                        data: {
+                            username_give: username,
+                            password_give: password
+                        },
+                        success: function (response) {
+                            if (response['result'] == 'success') {
+                                $.cookie('mytoken', response['token'], {path: '/'});
+                                window.location.replace("/")
+                            } else {
+                                alert(response['msg'])
+                            }
                         }
+                        });
                     }
-                })
+
+                }
+
             }
 
         </script>
@@ -103,8 +117,8 @@
                             </div>
                         </div>
                     </div>
-                    <button class="button is-info" onclick="login()">로그인</button>
-                    <button class="button is-light" onclick='window.location.href = "/membership.html"'>회원가입</button>
+                    <button class="button is-info" style="float: left;" onclick="login()">로그인</button>
+                    <button class="button is-info" style="float: right;" onclick='window.location.href ="/membership"'>회원가입</button>
                 </div>
             </div>
         </div>

@@ -1,3 +1,4 @@
+from pymongo import MongoClient
 import jwt
 import datetime
 import hashlib
@@ -6,27 +7,57 @@ from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
 
 app = Flask(__name__)
-
 app.config["TEMPLATES_AUTO_RELOAD"] = True
-app.config['UPLOAD_FOLDER'] = "./static/gamePics"
+app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
+
 SECRET_KEY = 'SPARTA'
 
-from pymongo import MongoClient
-import certifi
-ca = certifi.where()
-client = MongoClient('mongodb+srv://test:sparta@sparta.mtxvxou.mongodb.net/sparta?retryWrites=true&w=majority', tlsCAFile=ca)
-db = client.dbsparta
+client = MongoClient('mongodb://54.237.231.185', 27017, username="test", password="test")
+db = client.dbsparta_plus_week4
 
 
-## HTML을 주는 부분
-# 들어오면 로그인 화면으로
+
+#HTML을 주는 부분
+#접속시 jwt 토큰 확인 후 토큰 일치시 게임목록으로 보내고
+#미일치 시 로그인 창으로 보냄
 @app.route('/')
 def home():
-   return render_template('login.html')
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_info = db.user.find_one({"username": payload["id"]})
+        return render_template('login.html', user_info=user_info)
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("gamelist", msg="로그인 시간이 만료되었습니다."))
+    except jwt.exceptions.DecodeError:
+        return redirect(url_for("gamelist", msg="로그인 정보가 존재하지 않습니다."))
+
+#로그인 기능
+@app.route('/api/login', methods=['POST'])
+def sign_in():
+    username_receive = request.form['username_give']
+    password_receive = request.form['password_give']
+
+    pw_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
+    result = db.users.find_one({'username': username_receive, 'password': pw_hash})
+
+    if result is not None:
+        payload = {
+            'id': username_receive,
+            'exp': datetime.utcnow() + timedelta(seconds=60 * 60 * 24)  # 로그인 24시간 유지
+        }
+        token = jwt.encode(payload, SECRET_KEY, algorithm='HS256').decode('utf-8')
+
+        return jsonify({'result': 'success', 'token': token})
+    # 찾지 못하면
+    else:
+        return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
+
 
 @app.route('/gamelist')
 def gamelist():
-   return render_template('gamelist.html')
+    msg = request.args.get("msg")
+    return render_template('login.html', msg=msg)
 
 @app.route('/makegamelist')
 def mkgame():
@@ -207,6 +238,15 @@ def nick_get(u_nick):
 def info_get():
     info_list = list(db.user.find({}, {'_id': False}))
     return jsonify({'info': info_list})
+
+#game목록 불러오기[조원영]
+@app.route('/gamelist/game_info')
+def game_info():
+    posts = list(db.game.find({}))
+    for post in posts:
+        post["_id"] = str(post["_id"])
+    return jsonify({'post': posts})
+
 
 if __name__ == '__main__':
    app.run('0.0.0.0',port=5000,debug=True)
