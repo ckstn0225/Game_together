@@ -13,6 +13,7 @@ app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
 SECRET_KEY = 'SPARTA'
 
 import certifi
+
 ca = certifi.where()
 client = MongoClient('mongodb+srv://test:sparta@sparta.mtxvxou.mongodb.net/sparta?retryWrites=true&w=majority', tlsCAFile=ca)
 db = client.dbsparta
@@ -34,10 +35,12 @@ def home():
     except jwt.exceptions.DecodeError:
         return redirect(url_for("in_home", msg="로그인 정보가 존재하지 않습니다."))
 
+
 @app.route('/home')
 def in_home():
-        msg = request.args.get("msg")
-        return render_template('login.html', msg=msg)
+    msg = request.args.get("msg")
+    return render_template('login.html', msg=msg)
+
 
 # 로그인 기능
 @app.route('/api/login', methods=['POST'])
@@ -47,7 +50,6 @@ def sign_in():
 
     pw_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
     result = db.user.find_one({'u_id': username_receive, 'u_pw': pw_hash})
-
 
     if result is not None:
         payload = {
@@ -62,9 +64,10 @@ def sign_in():
         return jsonify({'result': "fail", 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
 
 
+# 회원가입
 @app.route('/api/membership', methods=['POST'])
 def sign_up():
-    username_receive = request.form['id_give']
+    username_receive = request.form['username_give']
     password_receive = request.form['pw_give']
     nickname_receive = request.form['nickname_give']
     password_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
@@ -76,31 +79,46 @@ def sign_up():
     db.user.insert_one(doc)
     return jsonify({'result': 'success'})
 
+
+# 중복체크(아이디)
+@app.route('/sign_up/check_id', methods=['POST'])
+def check_id():
+    username_receive = request.form['username_give']
+    exists = bool(db.users.find_one({"username": username_receive}))
+    return jsonify({'result': 'success', 'exists': exists})
+
+
 @app.route('/gamelist')
 def gamelist():
     msg = request.args.get("msg")
     return render_template('gamelist.html', msg=msg)
 
+
 @app.route('/makegamelist')
 def mkgame():
-   return render_template('makegamelist.html')
+    return render_template('makegamelist.html')
+
 
 @app.route('/membership')
 def membership():
-   return render_template('membership.html')
+    return render_template('membership.html')
+
 
 @app.route('/posting')
 def posting():
-   return render_template('posting.html')
+    return render_template('posting.html')
+
 
 @app.route('/memo', methods=['GET'])
 def listing():
-    return jsonify({'all_articles':articles})
+    return jsonify({'all_articles': articles})
+
 
 ## API 역할을 하는 부분
 @app.route('/memo', methods=['POST'])
 def saving():
-    return jsonify({'msg':'저장이 완료되었습니다!'})
+    return jsonify({'msg': '저장이 완료되었습니다!'})
+
 
 ##room post와 get
 @app.route("/room", methods=["POST"])
@@ -133,10 +151,12 @@ def room_post():
 
     return jsonify({'msg': '모집 게시글 작성 완료!'})
 
+
 @app.route("/room", methods=["GET"])
 def room_get():
     room_list = list(db.room.find({}, {'_id': False}))
     return jsonify({'room': room_list})
+
 
 ##참가하기와 취소하기
 @app.route("/room/in", methods=["POST"])
@@ -151,6 +171,7 @@ def room_in():
     db.room.update_one({'rid': int(rid_receive)}, {'$set': {'participate': party}})
     return jsonify({'msg': '참가 완료!'})
 
+
 @app.route("/room/out", methods=["POST"])
 def room_out():
     rid_receive = request.form['rid_give']
@@ -162,6 +183,7 @@ def room_out():
     db.room.update_one({'rid': int(rid_receive)}, {'$set': {'num': num}})
     db.room.update_one({'rid': int(rid_receive)}, {'$set': {'participate': party}})
     return jsonify({'msg': '취소 완료!'})
+
 
 ##충돌 방지 체크
 @app.route("/room/check", methods=["POST"])
@@ -220,6 +242,7 @@ def room_check():
             c = False
     return jsonify({'msg': msg, 'check': c})
 
+
 ##멤버보기 기능
 @app.route("/room/showmember", methods=["POST"])
 def room_showmember():
@@ -228,7 +251,8 @@ def room_showmember():
     members = room['participate']
     return jsonify({'members': members})
 
-#game 이름과 image를 POST
+
+# game 이름과 image를 POST
 @app.route("/game", methods=["POST"])
 def game_post():
     gname_receive = request.form['gname_give']
@@ -244,11 +268,12 @@ def game_post():
 
     return jsonify({'msg': '게임 목록 추가 완료!'})
 
-#game 이름과 image를 GET
+
+# game 이름과 image를 GET
 @app.route("/game", methods=["GET"])
 def game_get():
-    game_list = list(db.game.find({},{'_id':False}))
-    return jsonify({'game':game_list})
+    game_list = list(db.game.find({}, {'_id': False}))
+    return jsonify({'game': game_list})
 
 
 # user info get[조원영]
@@ -274,5 +299,6 @@ def get_posts():
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
 
+
 if __name__ == '__main__':
-   app.run('0.0.0.0',port=5000,debug=True)
+    app.run('0.0.0.0', port=5000, debug=True)
