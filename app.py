@@ -284,7 +284,7 @@ def info_get():
 # game목록 불러오기[조원영]
 @app.route("/get_list", methods=['GET'])
 def get_list():
-    g_list = list(db.games.find({}))
+    g_list = list(db.games.find({},{'_id': False}))
     return jsonify({'games': g_list})
     # 위는 게임만 아래는 좋아요 포함[코딩중 ㅠ]
     # token_receive = request.cookies.get('mytoken')
