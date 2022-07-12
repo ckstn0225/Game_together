@@ -56,10 +56,9 @@
     <script>
 
             function register() {
-                let username = $("#input-username").val()
-                let password = $("#input-password").val()
-                let password2 = $("#input-password2").val()
-                console.log(username, password, password2)
+                let username = $("#userid").val()
+                let password = $("#userpw").val()
+                let password2 = $("#userpw2").val()
                 if (password2 == "") {
                     $("#help-password2").text("비밀번호를 입력해주세요.").removeClass("is-safe").addClass("is-danger")
                     $("#input-password2").focus()
@@ -80,7 +79,7 @@
                         success: function (response) {
                             if (response['result'] == 'success') {
                                 alert('회원가입이 완료되었습니다.')
-                                window.location.replace = '/'
+                                window.location.replace('/')
                             } else {
                                 alert(response['msg'])
                             }
@@ -131,7 +130,7 @@
                         <div class="field-body">
                             <div class="field">
                                 <div class="control">
-                                    <input type="password" class="input" id="userpw" placeholder="비밀번호를 다시 입력하세요">
+                                    <input type="password" class="input" id="userpw2" placeholder="비밀번호를 다시 입력하세요">
                                 </div>
                             </div>
                         </div>
