@@ -17,23 +17,24 @@ db = client.dbsparta_plus_week4
 
 
 
-## HTML을 주는 부분
-# 들어오면 로그인 화면으로
+#HTML을 주는 부분
+#접속시 jwt 토큰 확인 후 토큰 일치시 게임목록으로 보내고
+#미일치 시 로그인 창으로 보냄
 @app.route('/')
 def home():
     token_receive = request.cookies.get('mytoken')
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        user_info = db.users.find_one({"username": payload["id"]})
+        user_info = db.user.find_one({"username": payload["id"]})
         return render_template('login.html', user_info=user_info)
     except jwt.ExpiredSignatureError:
         return redirect(url_for("gamelist", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
         return redirect(url_for("gamelist", msg="로그인 정보가 존재하지 않습니다."))
 
+#로그인 기능
 @app.route('/api/login', methods=['POST'])
 def sign_in():
-    # 로그인
     username_receive = request.form['username_give']
     password_receive = request.form['password_give']
 
@@ -246,10 +247,6 @@ def game_info():
         post["_id"] = str(post["_id"])
     return jsonify({'post': posts})
 
-@app.route('/api/login')
-def user_list():
-    user_list = list(db.user.find({}, {'_id': False}))
-    return jsonify({'users': user_list})
 
 if __name__ == '__main__':
    app.run('0.0.0.0',port=5000,debug=True)
