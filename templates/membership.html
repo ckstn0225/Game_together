@@ -1,19 +1,28 @@
 <!doctype html>
 <html lang="en">
-    <head>
+<head>
 
-        <!-- Webpage Title -->
-        <title>회원가입!</title>
+    <!-- Webpage Title -->
+    <title>회원가입!</title>
 
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        <!-- Bulma CSS -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
-        <!-- JS -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <!-- Font Awesome CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@100;300;400;700&display=swap"
+          rel="stylesheet">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/common.css') }}">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/login.css') }}">
+
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 
         <style>
             .container{
@@ -55,25 +64,97 @@
         </style>
     <script>
 
+            function is_nickname(asValue) {
+            var regExp = /^(?=.*[a-zA-Z])[-a-zA-Z0-9_.]{2,10}$/;
+            return regExp.test(asValue);
+            }
+
+            function is_password(asValue) {
+            var regExp = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%^&*]{8,20}$/;
+            return regExp.test(asValue);
+            }
+
+            // 아이디 형식 확인
+            function check_id() {
+                let username = $("#userid").val()
+                console.log(username)
+                if (username == "") {
+                    alert("아이디를 입력해주세요. <2-10자의 영문과 숫자와 일부 특수문자(._-)만 가능>")
+                    return;
+                }
+
+
+                // 아이디 중복 확인
+                $.ajax({
+                    type: "POST",
+                    url: "/sign_up/check_id",
+                    data: {
+                        username_give: 'username'
+                    },
+                    success: function (response) {
+
+                        if (response["exists"]) {
+                            alert("이미 존재하는 아이디입니다.")
+                        } else {
+                            alert("사용할 수 있는 아이디입니다.")
+                        }
+
+                    }
+                });
+            }
+
+            // 닉네임 형식 확인
+            function check_nick() {
+                let usernick = $("#usernick").val()
+                console.log(usernick)
+                if (usernick == "") {
+                    alert("닉네임을 입력해주세요.")
+                    return;
+                }
+                // 닉네임 중복 확인
+                $.ajax({
+                    type: "POST",
+                    url: "/sign_up/check_nick",
+                    data: {
+                        usernick_give: 'usernick'
+                    },
+                    success: function (response) {
+
+                        if (response["exists"]) {
+                            alert("이미 존재하는 닉네임입니다.")
+                        } else {
+                            alert("사용할 수 있는 닉네임입니다.")
+                        }
+
+                    }
+                });
+            }
+            // 비밀번호 확인과 회원가입 완료
             function register() {
                 let username = $("#userid").val()
                 let password = $("#userpw").val()
                 let password2 = $("#userpw2").val()
-                if (password2 == "") {
-                    $("#help-password2").text("비밀번호를 입력해주세요.").removeClass("is-safe").addClass("is-danger")
-                    $("#input-password2").focus()
+                let usernick = $('#usernick').val()
+
+                if (username == "") {
+                    alert("아이디를 입력해주세요.")
+                    return;
+                } else if (password2 == "") {
+                    alert("비밀번호를 입력해주세요.<영문, 숫자 필수, 특수문자(!@#$%^&*) 사용가능>")
                     return;
                 } else if (password2 != password) {
-                    $("#help-password2").text("비밀번호가 일치하지 않습니다.").removeClass("is-safe").addClass("is-danger")
-                    $("#input-password2").focus()
+                    alert("비밀번호가 일치하지 않습니다.")
+                    return;
+                } else if  (usernick == "") {
+                    alert("닉네임을 입력해주세요.")
                     return;
                 } else {
                     $.ajax({
                         type: "POST",
                         url: "/api/membership",
                         data: {
-                            id_give: $('#userid').val(),
-                            pw_give: $('#userpw').val(),
+                            username_give: $('#userid').val(),
+                            password_give: $('#userpw').val(),
                             nickname_give: $('#usernick').val()
                         },
                         success: function (response) {
@@ -88,6 +169,10 @@
                     })
                 }
 
+            }
+
+            function cancel() {
+              window.location.replace('/')
             }
 
         </script>
@@ -110,6 +195,7 @@
                                 <button class="button is-sparta" onclick="check_id()">중복확인</button>
                             </div>
                         </div>
+
                     </div>
                 </div>
                 <div class="field is-horizontal">
@@ -146,9 +232,10 @@
                                 </div>
                             </div>
                             <div class="control-check" id="btn-check-nick">
-                                <button class="button is-sparta" onclick="check_id()">중복확인</button>
+                                <button class="button is-sparta" onclick="check_nick()">중복확인</button>
                             </div>
                         </div>
+
                     </div>
                 </div>
                 <div class="member-btn">

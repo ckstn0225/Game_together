@@ -62,9 +62,9 @@ def sign_in():
         return jsonify({'result': "fail", 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
 
 
+# 회원가입
 @app.route('/api/membership', methods=['POST'])
 def sign_up():
-    username_receive = request.form['id_give']
     password_receive = request.form['pw_give']
     nickname_receive = request.form['nickname_give']
     password_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
@@ -75,6 +75,14 @@ def sign_up():
     }
     db.user.insert_one(doc)
     return jsonify({'result': 'success'})
+
+
+# 중복체크(아이디)
+@app.route('/sign_up/check_id', methods=['POST'])
+def check_id():
+    username_receive = request.form['username_give']
+    exists = bool(db.users.find_one({"username": username_receive}))
+    return jsonify({'result': 'success', 'exists': exists})
 
 
 @app.route('/gamelist')
