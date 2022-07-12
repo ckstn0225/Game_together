@@ -36,45 +36,56 @@ function toggle_like(gamename, type) {
     }
 }
 
+//게임 목록 불러오기
+$(document).ready(function () {
+    get_games()
+})
+
 
 function get_games() {
-    $("#post-box").empty()
     $.ajax({
-        type: "GET",
-        url: `/get_posts?username_give=${username}`,
-        data: {},
-        success: function (response) {
-            if (response["result"] == "success") {
-                let posts = response["posts"]
+            type: "GET",
+            url: `/get_list`,
+            data: {},
+            success: function (response) {
+                let posts = response['games']
                 console.log(posts)
                 for (let i = 0; i < posts.length; i++) {
-                    let post = posts[i]
-                    let time_post = new Date(post["date"])
-                    let time_before = time2str(time_post)
-                    let class_heart = post['heart_by_me'] ? "fa fa-heart" : "fa fa-heart-o"
-                    let count_heart = post['count_heart']
+                    let gamename = posts[i]['G_name']
+                    let gameimg = posts[i]['Img']
+                    let gameid = posts[i]['id']
+                    let html_temp = `<div class="card to_left" onclick='to_room("${gameid}")'>
+                                        <div class="card-image">
+                                            <img src="${gameimg}"
+                                                 alt="Placeholder image">
+                                        </div>
+                                        <div class="card-content G_name">
+                                            ${gamename}
+                                        </div>
+                                    </div>`
+                    $("#games").append(html_temp)
 
-                    function num2str(count) {
-                        if (count > 10000) {
-                            return parseInt(count / 1000) + "k"
-                        }
-                        if (count > 500) {
-                            return parseInt(count / 100) / 10 + "k"
-                        }
-                        if (count == 0) {
-                            return ""
-                        }
-                        return count
-                    }
-
-                    let html_temp = ``
                 }
             }
         }
-    })
+    )
 }
 
+//방으로 이동 시 방번호 지정
+function to_room(game) {
+        $.ajax({
+            type: "POST",
+            url: "/channel",
+            data: {
+                gamename_give: game
+            },
+            success: function (response) {
+                console.log(game)
+            }
+        });
+}
 
+//로그아웃 및 쿠키삭제
 function sign_out() {
     $.removeCookie('mytoken', {path: '/'});
     alert('로그아웃!')
