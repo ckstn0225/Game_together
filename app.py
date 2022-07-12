@@ -278,7 +278,7 @@ def game_post():
 # game 이름과 image를 GET
 @app.route("/game", methods=["GET"])
 def game_get():
-    games = list(db.games.find({}, {'_id': False}))
+    games = list(db.game.find({}, {'_id': False}))
     return jsonify({'all_game': games})
 
 
