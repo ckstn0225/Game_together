@@ -56,27 +56,27 @@ def room_post():
     plist.append(nick_receive)
 
     doc = {
-        'rid':count,
-        'gname':gname_receive,
-        'title':title_receive,
-        'desc':desc_receive,
-        'totalnum':totalnum_receive,
-        'num':1,
-        'date':date_receive,
-        'time':time_receive,
-        'nick':nick_receive,
-        'participate':plist
+        'rid': count,
+        'gname': gname_receive,
+        'title': title_receive,
+        'desc': desc_receive,
+        'totalnum': int(totalnum_receive),
+        'num': 1,
+        'date': date_receive,
+        'time': time_receive,
+        'nick': nick_receive,
+        'participate': plist
     }
     db.room.insert_one(doc)
 
-    return jsonify({'msg':'모집 게시글 작성 완료!'})
+    return jsonify({'msg': '모집 게시글 작성 완료!'})
 
 @app.route("/room", methods=["GET"])
 def room_get():
-    room_list = list(db.room.find({},{'_id':False}))
-    return jsonify({'room':room_list})
+    room_list = list(db.room.find({}, {'_id': False}))
+    return jsonify({'room': room_list})
 
-##참가및 취소
+##참가하기와 취소하기
 @app.route("/room/in", methods=["POST"])
 def room_in():
     rid_receive = request.form['rid_give']
@@ -100,6 +100,71 @@ def room_out():
     db.room.update_one({'rid': int(rid_receive)}, {'$set': {'num': num}})
     db.room.update_one({'rid': int(rid_receive)}, {'$set': {'participate': party}})
     return jsonify({'msg': '취소 완료!'})
+
+##충돌 방지 체크
+@app.route("/room/check", methods=["POST"])
+def room_check():
+    rid_receive = request.form['rid_give']
+    d = []
+    d.append(request.form['y'])
+    d.append(request.form['m'])
+    d.append(request.form['d'])
+    d.append(request.form['h'])
+    d.append(request.form['mi'])
+
+    room = db.room.find_one({'rid': int(rid_receive)})
+    ddate = room['date']
+    dtime = room['time']
+    ddatel = ddate.split('-')
+    dtimel = dtime.split(':')
+
+    c = True
+
+    if int(ddatel[0]) < int(d[0]):
+        c = False
+    elif int(ddatel[0]) > int(d[0]):
+        c = True
+    else:
+        if int(ddatel[1]) < int(d[1]):
+            c = False
+        elif int(ddatel[1]) > int(d[1]):
+            c = True
+        else:
+            if int(ddatel[2]) < int(d[2]):
+                c = False
+            elif int(ddatel[2]) > int(d[2]):
+                c = True
+            else:
+                if int(dtimel[0]) < int(d[3]):
+                    c = False
+                elif int(dtimel[0]) > int(d[3]):
+                    c = True
+                else:
+                    if int(dtimel[1]) < int(d[4]):
+                        c = False
+                    else:
+                        c = True
+
+    num = room['num']
+    tnum = room['totalnum']
+    msg = '시간이 지났습니다'
+
+    if c:
+        if num < tnum:
+            msg = '참가가 가능합니다'
+            c = True
+        else:
+            msg = '자리가 가득 찼습니다'
+            c = False
+    return jsonify({'msg': msg, 'check': c})
+
+##멤버보기 기능
+@app.route("/room/showmember", methods=["POST"])
+def room_showmember():
+    rid_receive = request.form['rid_give']
+    room = db.room.find_one({'rid': int(rid_receive)})
+    members = room['participate']
+    return jsonify({'members': members})
 
 #game 이름과 image를 POST
 @app.route("/game", methods=["POST"])
