@@ -278,14 +278,26 @@
                             nInfo.push(nd.getMinutes())
 
 
-                            if (dInfo[0] > nInfo[0]) check = true
-                            else if (dInfo[1] > nInfo[1]) check = true
-                            else if (dInfo[2] > nInfo[2]) check = true
-                            else if (tInfo[0] > nInfo[3]) check = true
-                            else if (tInfo[1] >= nInfo[4]) check = true
-                            else check = false
+                            if(dInfo[0] < nInfo[0]) check = false
+                            else if(dInfo[0] > nInfo[0]) check = true
+                            else{
+                                if(dInfo[1] < nInfo[1]) check = false
+                                else if(dInfo[1] > nInfo[1]) check = true
+                                else{
+                                    if(dInfo[2] < nInfo[2]) check = false
+                                    else if(dInfo[2] > nInfo[2]) check = true
+                                    else{
+                                        if (tInfo[0] < nInfo[3]) check = false
+                                        else if(tInfo[0] > nInfo[3]) check = true
+                                        else{
+                                            if (tInfo[1] < nInfo[4]) check = false
+                                            else check = true
+                                        }
+                                    }
+                                }
+                            }
 
-                            if (num < totalnum) check = true
+                            if (num < totalnum && check) check = true
                             else check = false
 
 
@@ -315,8 +327,8 @@
                                                 </div>
                                             </div>
                                             <div class="card-right">
-                                                <button type="button" class="btn btn-outline-primary" onclick="participate(${rid})">참가하기</button>
-                                                <button type="button" class="btn btn-outline-dark">멤버보기</button>
+                                                <button type="button" class="btn btn-outline-primary" onclick="checkfin(${rid})">참가하기</button>
+                                                <button type="button" class="btn btn-outline-dark" onclick="showmember(${rid})">멤버보기</button>
                                             </div>
                                         </div>`
                                 }
@@ -345,7 +357,7 @@
                                             </div>
                                             <div class="card-right">
                                                 <button type="button" class="btn btn-outline-primary" disabled>참가하기</button>
-                                                <button type="button" class="btn btn-outline-dark">멤버보기</button>
+                                                <button type="button" class="btn btn-outline-dark" onclick="showmember(${rid})">멤버보기</button>
                                             </div>
                                         </div>`
                                 }
@@ -376,7 +388,7 @@
                                             </div>
                                             <div class="card-right">
                                                 <button type="button" class="btn btn-outline-danger" onclick="leave(${rid})">취소하기</button>
-                                                <button type="button" class="btn btn-outline-dark">멤버보기</button>
+                                                <button type="button" class="btn btn-outline-dark" onclick="showmember(${rid})">멤버보기</button>
                                             </div>
                                         </div>`
                                 }
@@ -405,7 +417,7 @@
                                             </div>
                                             <div class="card-right">
                                                 <button type="button" class="btn btn-outline-danger" onclick="leave(${rid})">취소하기</button>
-                                                <button type="button" class="btn btn-outline-dark">멤버보기</button>
+                                                <button type="button" class="btn btn-outline-dark" onclick="showmember(${rid})">멤버보기</button>
                                             </div>
                                         </div>`
                                 }
@@ -420,7 +432,6 @@
 
         function participate(id) {
             let nick = $('#nick').text()
-            console.log(id,nick)
             $.ajax({
                 type: "POST",
                 url: "/room/in",
@@ -445,6 +456,34 @@
             });
         }
 
+        function checkfin(id){
+            let nd = new Date()
+            $.ajax({
+                type: "POST",
+                url: "/room/check",
+                data: {rid_give: id, y: nd.getFullYear(), m: nd.getMonth()+1, d: nd.getDate(),
+                h: nd.getHours(), mi: nd.getMinutes()},
+                success: function (response) {
+                    if(response["check"]) participate(id)
+                    else{
+                        alert(response["msg"])
+                        window.location.reload()
+                    }
+                }
+            });
+        }
+
+        function showmember(id){
+            $.ajax({
+                type: "POST",
+                url: "/room/showmember",
+                data: {rid_give: id},
+                success: function (response) {
+                    let p = '참가자: ' + response["members"]
+                    alert(p)
+                }
+            });
+        }
     </script>
 </head>
 <body>
