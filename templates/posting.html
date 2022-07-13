@@ -105,18 +105,31 @@
             let dtime = $('#dtime').val()
             let nick = "{{ user_nick }}"
 
-            $.ajax({
-                type: 'POST',
-                url: '/room',
-                data: {
-                    gname_give: gname, title_give: title, desc_give: desc, totalnum_give: totalnum,
-                    date_give: ddate, time_give: dtime, nick_give: nick
-                },
-                success: function (response) {
-                    alert(response['msg'])
-                    window.location.href = `/posting/${gname}?img={{ img_src }}`
-                }
-            })
+            if(title == ""){
+                alert("제목이 비어있습니다.")
+            }else if(desc == ""){
+                alert("내용이 비어있습니다. ")
+            }else if(totalnum == ""){
+                alert("최대 인원수를 설정하세요.")
+            }else if(ddate == ""){
+                alert("마감날짜를 설정하세요.")
+            }else if(dtime == ""){
+                alert("마감 시간을 설정하세요.")
+            }else{
+                $.ajax({
+                    type: 'POST',
+                    url: '/room',
+                    data: {
+                        gname_give: gname, title_give: title, desc_give: desc, totalnum_give: totalnum,
+                        date_give: ddate, time_give: dtime, nick_give: nick
+                    },
+                    success: function (response) {
+                        alert(response['msg'])
+                        window.location.href = `/posting/${gname}?img={{ img_src }}`
+                    }
+                })
+            }
+
 
         }
 
@@ -374,7 +387,7 @@
                         <input type='time' id="dtime">
                         <input type='number' min='2' id="totalnum">
                     </div>
-                    <button class="button is-info is-large is-fullwidth" onclick="save_room()">모집하기</button>
+                    <button type="button" class="button is-info is-large is-fullwidth" onclick="save_room()">모집하기</button>
 
                 </div>
 
