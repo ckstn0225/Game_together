@@ -24,9 +24,10 @@ function image_add(input) {
 function game_check() {
     let game = $('#game').val()
     if (game == "") {
-        alert("게임명칭을 입력해주세요.")
+        $('#help-game').text("게임명칭을 입력해주세요.").removeClass("is-safe").addClass("is-danger")
         return;
     }
+
     $.ajax({
         type: "POST",
         url: "/game/name",
@@ -37,8 +38,9 @@ function game_check() {
             result = response["exists"]
             if (result) {
                 alert("게임명칭이 중복되었습니다.\n기존 게임방에 참여해주세요.")
+                $('#help-game').text("게임명칭을 재입력해주세요.").removeClass("is-safe").addClass("is-danger")
             } else {
-                alert("추가할 수 있는 게임명칭입니다.")
+                $('#help-game').text("추가할 수 있는 게임명칭입니다.").removeClass("is-danger").addClass("is-safe")
             }
             isGameChecked = true
         }
@@ -52,15 +54,19 @@ function game_add() {
 
     if (game == "") {
         alert("게임명칭을 입력해주세요.")
+        $('#help-game').text("게임명칭을 입력해주세요.").removeClass("is-safe").addClass("is-danger")
         return;
     } else if (file == null) {
         alert("이미지를 추가해주세요.")
+        $('#help-image').text("이미지를 추가해주세요.").removeClass("is-safe").addClass("is-danger")
         return;
     } else if (isGameChecked == false) {
         alert("게임명칭 중복체크를 해주세요.")
+        $('#help-game').text("게임명칭 중복체크를 해주세요.").removeClass("is-safe").addClass("is-danger")
         return;
     } else if (result == true) {
         alert("게임명칭이 중복되었습니다.\n기존 게임방에 참여해주세요.")
+        $('#help-game').text("게임명칭을 재입력해주세요.").removeClass("is-safe").addClass("is-danger")
         return;
     }
     let form_data = new FormData()

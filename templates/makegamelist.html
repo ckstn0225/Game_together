@@ -19,7 +19,7 @@
     <!-- 구글폰트 -->
     <link href="https://fonts.googleapis.com/css?family=Stylish&display=swap" rel="stylesheet">
     <link href=../static/css/makegamelist.css rel="stylesheet">
-    <script src="{{ url_for('static', filename='js/gamelist.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/makegamelist.js') }}"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap" rel="stylesheet">
@@ -39,7 +39,6 @@
                         <a class="navbar-item" href="/gamelist">
                             Game_together
                         </a>
-
                     </div>
                     <div id="navbarMenuHeroB" class="navbar-menu">
                         <div class="navbar-end">
@@ -47,13 +46,13 @@
                                 어서오세요! {{ user_nick }}님!
                             </a>
                             <span class="navbar-item">
-                      <button class="button" onclick='$("#modal").addClass("is-active")'>
-                        <span class="icon">
-                          <i class="fa fa-github"></i>
+                          <button class="button" onclick='$("#modal").addClass("is-active")'>
+                            <span class="icon">
+                              <i class="fa fa-github"></i>
+                            </span>
+                            <span>Log Out</span>
+                          </button>
                         </span>
-                        <span>Log Out</span>
-                      </button>
-                    </span>
                         </div>
                     </div>
                 </div>
@@ -64,21 +63,76 @@
         <h1>생성할 게임의 명칭, 이미지를 첨부해주세요</h1>
     </div>
     <div class="mygame">
-
-        <div class="mb-3">
-            <input id="game" class="form-control" placeholder="추가할 게임명칭을 입력해주세요">
-            <div class="control-check" id="btn-check-id">
-                <button onclick="game_check()"class="button is-sparta">중복확인</button>
+        <div class="field is-horizontal" style="max-width: 480px;">
+            <div class="field-label">
+                <div class="field-body">
+                    <div class="field">
+                        <div class="control has-icons-left" style="width:100%">
+                            <input id="game" type="text" class="input" placeholder="추가할 게임명칭을 입력해주세요">
+                            <span class="icon is-small is-left"><i class="fa fa-gamepad"></i></span>
+                        </div>
+                    </div>
+                    <div class="control-check" id="btn-check-id">
+                        <button type="button" onclick="game_check()" class="button is-sparta">중복확인</button>
+                    </div>
+                </div>
             </div>
-            <div id="show-image">
-                <img id="example-image" class="example-image" src="../static/img/img_dummy.jpg">
-            </div>
-            <label for="file" class="form-label">게임 사진을 업로드해주세요</label>
-            <input class="form-control" type="file" id="file" accept="image/*" onchange="image_add(this)">
         </div>
-            <button onclick="game_add()" type="button" class="btn btn-outline-dark">개설하기</button>
-            <button onclick="get_game_test()" type="button" class="btn btn-outline-dark">DB 저장확인 용</button>
-        <div class="row row-cols-1 row-cols-md-3 g-4" id="card-box" hidden="true">
+        <p id="help-game" class="help is-danger"></p>
+        <div id="show-image">
+            <img id="example-image" class="example-image" src="../static/img/img_dummy.jpg">
+        </div>
+        <div class="file has-name is-fullwidth">
+            <label class="file-label">
+                <input id="file" class="file-input" type="file" name="resume" accept="image/*" onchange="image_add(this)">
+                <span class="file-cta">
+          <span class="file-icon">
+            <i class="fas fa-upload"></i>
+          </span>
+          <span class="file-label">
+            파일 선택
+          </span>
+        </span>
+                <span class="file-name">
+          게임 사진을 업로드해주세요
+        </span>
+            </label>
+        </div>
+        <p id="help-image" class="help is-danger"></p>
+        {#            <label for="file" class="form-label">게임 사진을 업로드해주세요</label>#}
+        {#            <input class="form-control" type="file" id="file" accept="image/*" onchange="image_add(this)">#}
+        <div class="control-check" id="btn-check-id">
+            <button onclick="game_add()" type="button" class="button is-info">개설하기</button>
+        </div>
+        <div class="container has-text-centered formargin" id="games">
+
+            <div class="modal" id="modal">
+                <div class="modal-background"></div>
+                <div class="modal-content">
+                    <div class="card">
+                        <div class="card-content">
+                            <p class="title" style="color:black">
+                                진짜로 나가시나요..?
+                            </p>
+                        </div>
+                        <footer class="card-footer">
+                            <p class="card-footer-item">
+          <span>
+              <a onclick="sign_out()">로그아웃 하기</a>
+          </span>
+                            </p>
+                            <p class="card-footer-item">
+          <span>
+            <a onclick='$("#modal").removeClass("is-active")'>취소</a>
+          </span>
+                            </p>
+                        </footer>
+                    </div>
+                </div>
+                <button class="modal-close is-large" aria-label="close"
+                        onclick='$("#modal").removeClass("is-active")'></button>
+            </div>
+
         </div>
     </div>
 </body>
