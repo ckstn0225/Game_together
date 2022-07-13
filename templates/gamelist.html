@@ -52,7 +52,7 @@
                                 어서오세요! {{ user_nick }}님!
                             </a>
                             <span class="navbar-item">
-              <button class="button" onclick="sign_out()">
+              <button class="button" onclick='$("#modal").addClass("is-active")'>
                 <span class="icon">
                   <i class="fa fa-github"></i>
                 </span>
@@ -67,7 +67,31 @@
 
         <div class="container has-text-centered formargin" id="games">
 
-
+            <div class="modal" id="modal">
+                <div class="modal-background"></div>
+                <div class="modal-content">
+                    <div class="card">
+                        <div class="card-content">
+                            <p class="title" style="color:black">
+                                진짜로 나가시나요..?
+                            </p>
+                        </div>
+                        <footer class="card-footer">
+                            <p class="card-footer-item">
+      <span>
+          <a onclick="sign_out()">로그아웃 하기</a>
+      </span>
+                            </p>
+                            <p class="card-footer-item">
+      <span>
+        <a onclick='$("#modal").removeClass("is-active")'>취소</a>
+      </span>
+                            </p>
+                        </footer>
+                    </div>
+                </div>
+                <button class="modal-close is-large" aria-label="close" onclick='$("#modal").removeClass("is-active")'></button>
+            </div>
 
         </div>
 
