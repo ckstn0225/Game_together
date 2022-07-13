@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-
+    <section class="hero is-info is-fullheight">
     <!-- Webpage Title -->
     <title>회원가입!</title>
 
@@ -26,7 +26,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 
-        <style>
+    <style>
             *{
                 font-family: 'Gamja Flower', cursive;
             }
@@ -59,7 +59,7 @@
 
 
 
-        </style>
+    </style>
     <script>
 
             function is_nickname(asValue) {
@@ -73,11 +73,15 @@
             }
 
             // 아이디 형식 확인
-            function check_id() {
+           function check_id() {
                 let username = $("#userid").val()
                 console.log(username)
                 if (username == "") {
-                    alert("아이디를 입력해주세요.\n<2-10자의 영문과 숫자와 일부 특수문자(._-)만 가능>")
+                    $('#help-id').text("아이디를 입력해주세요.<2-10자의 영문과 숫자와 일부 특수문자(._-)만 가능>")
+                    return;
+                }
+                if (!is_nickname(username)) {
+                    $('#help-id').text("아이디는 2-10자의 영문과 숫자와 일부 특수문자(._-)만 가능")
                     return;
                 }
 
@@ -91,7 +95,7 @@
                     success: function (response) {
 
                         if (response["exists"]) {
-                            $('#help-id').text("이미 존재하는 아이디입니다.").removeClass("is-safe").addClass("is-danger")
+                            $('#help-id').text("이미 선점한 아이디입니다.").removeClass("is-safe").addClass("is-danger")
                         } else {
                             $('#help-id').text("사용할 수 있는 아이디입니다.").removeClass("is-danger")
                             return;
@@ -102,7 +106,7 @@
             }
 
             // 닉네임 형식 확인
-            function check_nick() {
+           function check_nick() {
                 let usernick = $("#usernick").val()
                 console.log(usernick)
                 if (usernick == "") {
@@ -119,7 +123,7 @@
                     success: function (response) {
 
                         if (response["exists"]) {
-                          $('#help-nick').text("이미 존재하는 닉네임입니다.").removeClass("is-safe").addClass("is-danger")
+                          $('#help-nick').text("이미 선점한 닉네임입니다.").removeClass("is-safe").addClass("is-danger")
                           return;
                         } else {
                           $('#help-nick').text("사용할 수 있는 닉네임입니다.").removeClass("is-danger")
@@ -128,9 +132,9 @@
 
                     }
                 });
-            }
+           }
             // 비밀번호 확인과 회원가입 완료
-            function register() {
+           function register() {
                 let username = $("#userid").val()
                 let password = $("#userpw").val()
                 let password2 = $("#userpw2").val()
@@ -176,15 +180,16 @@
                     })
                 }
 
-            }
+           }
 
-            function cancel() {
+           function cancel() {
               window.location.replace('/home')
-            }
+           }
 
-        </script>
-    </head>
-    <body bgcolor='lavender'>
+    </script>
+    </section>
+</head>
+    <body>
         <div class="section has-text-centered">
             <h1 class="title">회원가입 페이지</h1>
             <div class="box" style="width:50%">
@@ -205,7 +210,6 @@
                     </div>
 
                     <p id="help-id" class="help is-danger"> </p>
-
                 </div>
 
                 <div class="field is-horizontal">
@@ -251,7 +255,6 @@
                                 <button class="button is-sparta" onclick="check_nick()">중복확인</button>
                             </div>
                         </div>
-
                     </div>
                     <p id="help-nick" class="help is-danger"> </p>
                 </div>
