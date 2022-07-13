@@ -97,13 +97,30 @@ def check_nick():
 
 @app.route('/gamelist')
 def gamelist():
-    msg = request.args.get("msg")
-    return render_template('gamelist.html', msg=msg)
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_info = db.user.find_one({"u_id": payload["id"]})
+        user_nick = user_info['nick']
+        return render_template('gamelist.html', result="success", user_nick=user_nick)
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("in_home", msg="권한이 없습니다."))
+    except jwt.exceptions.DecodeError:
+        return redirect(url_for("in_home", msg="권한이 없습니다."))
 
 
 @app.route('/makegamelist')
 def mkgame():
-    return render_template('makegamelist.html')
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_info = db.user.find_one({"u_id": payload["id"]})
+        user_nick = user_info['nick']
+        return render_template('makegamelist.html', result="success", user_nick=user_nick)
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("in_home", msg="권한이 없습니다."))
+    except jwt.exceptions.DecodeError:
+        return redirect(url_for("in_home", msg="권한이 없습니다."))
 
 
 @app.route('/membership')
@@ -320,19 +337,7 @@ def info_get():
     # except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
     #     return redirect(url_for("home"))
 
-# game채널 접속[조원영]
-@app.route("/channel", methods=['POST'])
-def channel():
-    token_receive = request.cookies.get('mytoken')
-    try:
-        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        user_info = db.user.find_one({"u_id": payload["id"]})
-        user_nick = user_info['nick']
-        return render_template('posting.html', result="success", user_info=user_info, user_nick=user_nick)
-    except jwt.ExpiredSignatureError:
-        return redirect(url_for("in_home", msg="권한이 없습니다."))
-    except jwt.exceptions.DecodeError:
-        return redirect(url_for("in_home", msg="권한이 없습니다."))
+
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
