@@ -35,22 +35,22 @@
 </head>
 
 
-    <section class="hero is-info is-large">
-        <div class="hero-head">
-            <nav class="navbar">
-                <div class="container">
-                    <div class="navbar-brand is-light">
-                        <a class="navbar-item">
-                            Game_together
-                        </a>
+<section class="hero is-info is-large">
+    <div class="hero-head">
+        <nav class="navbar">
+            <div class="container">
+                <div class="navbar-brand is-light">
+                    <a class="navbar-item">
+                        Game_together
+                    </a>
 
-                    </div>
-                    <div id="navbarMenuHeroB" class="navbar-menu">
-                        <div class="navbar-end">
-                            <a class="navbar-item">
-                                어서오세요! {{ user_nick }}님!
-                            </a>
-                            <span class="navbar-item">
+                </div>
+                <div id="navbarMenuHeroB" class="navbar-menu">
+                    <div class="navbar-end">
+                        <a class="navbar-item">
+                            어서오세요! {{ user_nick }}님!
+                        </a>
+                        <span class="navbar-item">
               <button class="button" onclick='$("#modal").addClass("is-active")'>
                 <span class="icon">
                   <i class="fa fa-github"></i>
@@ -58,51 +58,61 @@
                 <span>Log Out</span>
               </button>
             </span>
-                        </div>
                     </div>
                 </div>
-            </nav>
-        </div>
-    </section>
-        <div class="container has-text-centered formargin" id="games">
+            </div>
+        </nav>
+    </div>
+</section>
+<div class="container has-text-centered formargin" id="games">
 
-            <div class="modal" id="modal">
-                <div class="modal-background"></div>
-                <div class="modal-content">
-                    <div class="card">
-                        <div class="card-content">
-                            <p class="title" style="color:black">
-                                진짜로 나가시나요..?
-                            </p>
-                        </div>
-                        <footer class="card-footer">
-                            <p class="card-footer-item">
+    <div class="modal" id="modal">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <div class="card">
+                <div class="card-content">
+                    <p class="title" style="color:black">
+                        진짜로 나가시나요..?
+                    </p>
+                </div>
+                <footer class="card-footer">
+                    <p class="card-footer-item">
       <span>
           <a onclick="sign_out()">로그아웃 하기</a>
       </span>
-                            </p>
-                            <p class="card-footer-item">
+                    </p>
+                    <p class="card-footer-item">
       <span>
         <a onclick='$("#modal").removeClass("is-active")'>취소</a>
       </span>
-                            </p>
-                        </footer>
-                    </div>
-                </div>
-                <button class="modal-close is-large" aria-label="close" onclick='$("#modal").removeClass("is-active")'></button>
+                    </p>
+                </footer>
             </div>
-
         </div>
+        <button class="modal-close is-large" aria-label="close" onclick='$("#modal").removeClass("is-active")'></button>
+    </div>
 
-        <div class="hero-foot" style="clear:both;">
-            <nav class="tabs is-boxed is-fullwidth">
-                <div class="container">
-                    <ul style="float:right;">
-                        <button onclick="makegamelist()" class="button" style="font-family: 'Gamja Flower', cursive;">게임목록추가</button>
-                    </ul>
-                </div>
-            </nav>
+</div>
+
+<div class="hero-foot" style="clear:both;">
+    <nav class="tabs is-boxed is-fullwidth">
+        <div class="container">
+            <ul style="float:right;">
+                <button onclick="makegamelist()" class="button" style="font-family: 'Gamja Flower', cursive;">게임목록추가
+                </button>
+            </ul>
         </div>
+    </nav>
+</div>
+<footer class="footer" style="margin-top: 20px; background-color: lightskyblue; height: 10000px">
+    <div class="content has-text-centered">
+        <p>
+            <strong>Game_Together</strong> by <a href="https://github.com/ckstn0225/game_together">Sparta A club fourth team</a>.
+            The source code is free. The website content
+            is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
+        </p>
+    </div>
+</footer>
 
 
 </body>
