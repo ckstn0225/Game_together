@@ -267,10 +267,10 @@ def game_post():
     file.save(save_to)
 
     doc = {
-        'game': game_receive,
-        'file': f'{filename}.{extension}'
+        'G_name': game_receive,
+        'Img': f'{filename}.{extension}'
     }
-    db.game.insert_one(doc)
+    db.games.insert_one(doc)
 
     return jsonify({'msg': '게임 목록 추가 완료!'})
 
@@ -278,8 +278,8 @@ def game_post():
 # game 이름과 image를 GET
 @app.route("/game", methods=["GET"])
 def game_get():
-    games = list(db.game.find({}, {'_id': False}))
-    return jsonify({'all_game': games})
+    game_list = list(db.games.find({}, {'_id': False}))
+    return jsonify({'games': game_list})
 
 
 # user info get[조원영]
