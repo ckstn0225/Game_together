@@ -34,10 +34,14 @@
         }
     </style>
     <script>
+        let isGameChecked = false;
+        let result = false;
+
         $(document).ready(function () {
             bsCustomFileInput.init()
         })
-        function add_image(input) {
+
+        function image_add(input) {
             let file = input.files[0];
             let newImage = document.createElement("img");
             newImage.setAttribute("class","img");
@@ -53,21 +57,54 @@
             $('#show-image').empty()
             container.appendChild(newImage);
         }
-        function add_game() {
+        
+        function game_check() {
             let game = $('#game').val()
-
             if (game == "") {
                 alert("게임명칭을 입력해주세요.")
                 return;
             }
+            $.ajax({
+                type: "POST",
+                url: "/game/name",
+                data: {
+                    game_give: game
+                },
+                success: function (response) {
+                    result = response["exists"]
+                    if (result) {
+                        alert("게임명칭이 중복되었습니다.\n기존 게임방에 참여해주세요.")
+                    } else {
+                        alert("추가할 수 있는 게임명칭입니다.")
+                    }
+                    isGameChecked = true
+                }
+            });
+        }
+
+        function game_add() {
+            let game = $('#game').val()
+
             let file = $('#file')[0].files[0]
+
+            if (game == "") {
+                alert("게임명칭을 입력해주세요.")
+                return;
+            } else if (file == null) {
+                alert("이미지를 추가해주세요.")
+                return;
+            } else if (isGameChecked == false) {
+                alert("게임명칭 중복체크를 해주세요.")
+                return;
+            } else if (result == true) {
+                alert("게임명칭이 중복되었습니다.\n기존 게임방에 참여해주세요.")
+                return;
+            }
             let form_data = new FormData()
-            console.log(file)
 
             form_data.append("file_give", file)
             form_data.append("game_give", game)
 
-            console.log(form_data)
             $.ajax({
                 type: "POST",
                 url: "/game",
@@ -77,10 +114,11 @@
                 processData: false,
                 success: function (response) {
                     alert(response["msg"])
-                    window.location.reload()
+                    window.location.href = `/gamelist`
                 }
             });
         }
+
         function get_game_test() {
             $('#card-box').removeAttr('hidden','true')
             $.ajax({
@@ -114,13 +152,16 @@
     <div class="mygame">
         <div class="mb-3">
             <input id="game" class="form-control" placeholder="추가할 게임명칭을 입력해주세요">
+            <div class="control-check" id="btn-check-id">
+                <button onclick="game_check()"class="button is-sparta">중복확인</button>
+            </div>
             <div id="show-image">
                 <img id="example-image" class="example-image" src="../static/img/img_dummy.jpg">
             </div>
             <label for="file" class="form-label">게임 사진을 업로드해주세요</label>
-            <input class="form-control" type="file" id="file" accept="image/*" onchange="add_image(this)">
+            <input class="form-control" type="file" id="file" accept="image/*" onchange="image_add(this)">
         </div>
-            <button onclick="add_game()" type="button" class="btn btn-outline-dark">개설하기</button>
+            <button onclick="game_add()" type="button" class="btn btn-outline-dark">개설하기</button>
             <button onclick="get_game_test()" type="button" class="btn btn-outline-dark">DB 저장확인 용</button>
         <div class="row row-cols-1 row-cols-md-3 g-4" id="card-box" hidden="true">
         </div>

@@ -94,7 +94,6 @@ def check_nick():
     print(exists)
     return jsonify({'result': 'success', 'exists': exists})
 
-
 @app.route('/gamelist')
 def gamelist():
     token_receive = request.cookies.get('mytoken')
@@ -317,6 +316,13 @@ def game_get():
     game_list = list(db.games.find({}, {'_id': False}))
     return jsonify({'games': game_list})
 
+# 중복체크(게임명칭)
+@app.route('/game/name', methods=['POST'])
+def game_check():
+    game_receive = request.form['game_give']
+    exists = bool(db.games.find_one({"G_name": game_receive}))
+    print(exists)
+    return jsonify({'result': 'success', 'exists': exists})
 
 # user info get[조원영]
 @app.route('/gamelist/get_info')
