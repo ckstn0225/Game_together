@@ -55,7 +55,7 @@ function get_games() {
                     let gameimg = posts[i]['Img']
                     let html_temp = `<div class="card to_left g_box" onclick='to_room("${gamename}")'>
                                         <div class="card-image">
-                                            <img src="${gameimg}"
+                                            <img src="../static/${gameimg}>
                                                  class="g_image" alt="Placeholder image">
                                         </div>
                                         <div class="card-content G_name">
