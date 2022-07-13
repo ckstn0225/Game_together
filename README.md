@@ -9,8 +9,8 @@
 <br><br>
 
 <h3><b> 프로젝트 시연영상 </b></h3>
-""
-
+<iframe width="640" height="360" src="https://www.youtube.com/embed/kTcRRaXV-fg?ecver=1"  
+ frameborder="0" allow="autoplay; encrypted-media" allowfullscreen> </iframe>  
 ---
 
 <br>
@@ -87,7 +87,7 @@
         <td width="5%">GET</td>
         <td width="12%">/</td>
         <td width="30%"></td>
-        <td width="31%">Token 검증 - render_template('gamelist.html', user_info=user_info, user_nick=user_nick)<br>Token 시간 만료시 - redirect(url_for("in_home", msg="로그인 시간이 만료되었습니다."))
+        <td width="31%">Token 검증 - render_template('gamelist.html', user_info=user_info, user_nick=user_nick)<br>Token 시간 만료시 - redirect(url_for("in_home", msg="로그인 시간이 만료되었습니다."))<br>
 Token 미검증 - redirect(url_for("in_home"))</td>
     </tr>
     <tr>
@@ -109,8 +109,8 @@ Token 미검증 - redirect(url_for("in_home"))</td>
         <td width="5%">GET</td>
         <td width="12%">/makegamelist</td>
         <td width="30%"></td>
-        <td width="31%">Token 검증 - render_template('gamelist.html', user_info=user_info, user_nick=user_nick)
-Token 시간 만료시 - redirect(url_for("in_home", msg="로그인 시간이 만료되었습니다."))
+        <td width="31%">Token 검증 - render_template('gamelist.html', user_info=user_info, user_nick=user_nick)<br>
+Token 시간 만료시 - redirect(url_for("in_home", msg="로그인 시간이 만료되었습니다."))<br>
 Token 미검증 - redirect(url_for("in_home"))</td>
     </tr>
     <tr>
@@ -118,16 +118,16 @@ Token 미검증 - redirect(url_for("in_home"))</td>
         <td width="5%">GET</td>
         <td width="12%">/posting/<keyword></td>
         <td width="30%"></td>
-        <td width="31%">Token 검증 - render_template('gamelist.html', user_info=user_info, user_nick=user_nick)
-Token 시간 만료시 - redirect(url_for("in_home", msg="권한이 없습니다."))
+        <td width="31%">Token 검증 - render_template('gamelist.html', user_info=user_info, user_nick=user_nick)<br>
+Token 시간 만료시 - redirect(url_for("in_home", msg="권한이 없습니다."))<br>
 Token 미검증 - redirect(url_for("in_home, msg="권한이 없습니다."))</td>
     </tr>
     <tr>
         <td width="12%">로그인</td>
         <td width="5%">POST</td>
         <td width="12%">/api/login</td>
-        <td width="30%">{'u_id': username_receive, 'u_pw': pw_hash}</td>
-        <td width="31%">로그인 성공 - {'result': 'success', 'token': token}
+        <td width="30%">{'u_id': username_receive,<br> 'u_pw': pw_hash}</td>
+        <td width="31%">로그인 성공 - {'result': 'success', 'token': token}<br>
 로그인 실패 - {'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'}</td>
     </tr>
     <tr>
@@ -135,7 +135,7 @@ Token 미검증 - redirect(url_for("in_home, msg="권한이 없습니다."))</td
         <td width="5%">POST</td>
         <td width="12%">/sign_up/check_id</td>
         <td width="30%">{"u_id": username_receive}</td>
-        <td width="31%">중복시 - {'msg':"이미 존재하는 아이디입니다."}
+        <td width="31%">중복시 - {'msg':"이미 존재하는 아이디입니다."}<br>
 비 중복시 - {'msg':"사용할 수 있는 아이디입니다."}</td>
     </tr>
     <tr>
@@ -143,42 +143,41 @@ Token 미검증 - redirect(url_for("in_home, msg="권한이 없습니다."))</td
         <td width="5%">POST</td>
         <td width="12%">/sign_up/check_nick</td>
         <td width="30%">{"nick": nickname_receive}</td>
-        <td width="31%">중복시 - {'msg':"이미 존재하는 닉네임입니다."}
+        <td width="31%">중복시 - {'msg':"이미 존재하는 닉네임입니다."}<br>
 비 중복시 - {'msg':"사용할 수 있는 닉네임입니다."}</td>
     </tr>
     <tr>
         <td width="12%">회원가입</td>
         <td width="5%">POST</td>
         <td width="12%">/api/membership</td>
-        <td width="30%">{"u_id": username_receive,"u_pw": password_hash, "nick": nickname_receive}</td>
+        <td width="30%">{"u_id": username_receive,<br>"u_pw": password_hash,<br> "nick": nickname_receive}</td>
         <td width="31%">{'msg': '회원가입이 완료되었습니다.'}</td>
     </tr>
     <tr>
         <td width="12%">게임채널 방등록</td>
         <td width="5%">POST</td>
         <td width="12%">/room</td>
-        <td width="30%">{'rid': count,'gname': gname_receive,'title': title_receive,'desc': desc_receive,
-'totalnum': int(totalnum_receive),'num': 1,'date': date_receive,
-'time': time_receive,'nick': nick_receive,'participate': plist}</td>
+        <td width="30%">{'rid': count,<br>'gname': gname_receive,<br>'title': title_receive,<br>'desc': desc_receive,<br>
+'totalnum': int(totalnum_receive),<br>'num': 1,<br>'date': date_receive,<br>
+'time': time_receive,<br>'nick': nick_receive,<br>'participate': plist}</td>
         <td width="31%">빈칸 없을 시 - {'msg': '모집 게시글 작성 완료!'} 빈칸 있을 시 - {'msg': '빈칸을 다 채워주세요"}</td>
     </tr>
     <tr>
         <td width="12%">게임 채널 조회</td>
         <td width="5%">GET</td>
         <td width="12%">/room</td>
-        <td width="30%">{'rid': count,'gname': gname_receive,'title': title_receive,'desc': desc_receive,
-'totalnum': int(totalnum_receive),'num': 1,'date': date_receive,
-'time': time_receive,'nick': nick_receive,'participate': plist}</td>
-        <td width="31%">Token 검증 - render_template('gamelist.html', user_info=user_info, user_nick=user_nick)
-Token 시간 만료시 - redirect(url_for("in_home", msg="권한이 없습니다."))
+        <td width="30%">{'rid': count,<br>'gname': gname_receive,<br>'title': title_receive,<br>'desc': desc_receive,<br>
+'totalnum': int(totalnum_receive),<br>'num': 1,<br>'date': date_receive,<br>
+'time': time_receive,<br>'nick': nick_receive,<br>'participate': plist}</td>
+        <td width="31%">Token 검증 - render_template('gamelist.html', user_info=user_info, user_nick=user_nick)<br>
+Token 시간 만료시 - redirect(url_for("in_home", msg="권한이 없습니다."))<br>
 Token 미검증 - redirect(url_for("in_home, msg="권한이 없습니다."))</td>
     </tr>
     <tr>
         <td width="12%">게임 참가</td>
         <td width="5%">POST</td>
         <td width="12%">/room/in</td>
-        <td width="30%">{'rid': int(rid_receive)}, {'$set': {'num': num}}
-{'rid': int(rid_receive)}, {'$set': {'participate': party}}</td>
+        <td width="30%">{'rid': int(rid_receive)}, <br> {'$set': {'num': num}}<br>{'rid': int(rid_receive)}, <br>{'$set': {'participate': party}}</td>
         <td width="31%">{'msg':'참가 완료!'}</td>
     </tr>
 v
@@ -186,8 +185,7 @@ v
         <td width="12%">게임 퇴장</td>
         <td width="5%">POST</td>
         <td width="12%">/room/out</td>
-        <td width="30%">{'rid': int(rid_receive)}, {'$set': {'num': num}}
-{'rid': int(rid_receive)}, {'$set': {'participate': party}}</td>
+        <td width="30%">{'rid': int(rid_receive)}, <br> {'$set': {'num': num}}<br>{'rid': int(rid_receive)}, <br>{'$set': {'participate': party}}</td>
         <td width="31%">{'msg':'취소완료!'}</td>
     </tr>
     <tr>
@@ -195,9 +193,9 @@ v
         <td width="5%">/room/check</td>
         <td width="12%">/sign_up/check_id</td>
         <td width="30%">{"u_id": username_receive}</td>
-        <td width="31%">시간 지났을 경우 - {'msg':'마감완료!'}
-자리가 있을 경우 - {'msg':'참가가 가능합니다}
-인원이 가득찬경우 - {'msg':'자리가 가득 찼습니다'}[게임참가를 위한 변수로 사용]</td>
+        <td width="31%">시간 지났을 경우 - {'msg':'마감완료!'}<br>
+자리가 있을 경우 - {'msg':'참가가 가능합니다}<br>
+인원이 가득찬경우 - {'msg':'자리가 가득 찼습니다'}<br>[게임참가를 위한 변수로 사용]</td>
     </tr>
     <tr>
         <td width="12%">게임 참가 멤버 조회</td>
@@ -217,7 +215,7 @@ v
         <td width="12%">게임 제목 이미지 등록</td>
         <td width="5%">POST</td>
         <td width="12%">/game</td>
-        <td width="30%">"{'G_name': game_receive,
+        <td width="30%">"{'G_name': game_receive,<br>
         'Img': f'{filename}.{extension}'}"</td>
         <td width="31%">{'msg': '게임 목록 추가 완료!'}</td>
     </tr>
@@ -226,7 +224,7 @@ v
         <td width="5%">GET</td>
         <td width="12%">/game/name</td>
         <td width="30%">{"G_name": game_receive}}</td>
-        <td width="31%">{'msg':"게임명칭이 중복되었습니다.\n기존 게임방에 참여해주세요."}
+        <td width="31%">{'msg':"게임명칭이 중복되었습니다.\n기존 게임방에 참여해주세요."}<br>
 {'msg':"추가할 수 있는 게임명칭입니다."}</td>
     </tr>
     <tr>
