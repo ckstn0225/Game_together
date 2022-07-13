@@ -42,6 +42,18 @@
                 box-shadow: 0px 0px 5px 0px;
             }
 
+            .home-btn{
+
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .home-btn>.button {
+                margin-right: 15px;
+            }
+
 
         </style>
         <script>
@@ -56,8 +68,7 @@
                 if (username == "") {
                     alert("아이디를 입력해주세요.")
                     return;
-                } else {
-                    if (password == "") {
+                } else if (password == "") {
                     alert("비밀번호를 입력해주세요.")
                     return;
                     } else {
@@ -71,7 +82,9 @@
                         success: function (response) {
                             if (response['result'] == 'success') {
                                 $.cookie('mytoken', response['token'], {path: '/'});
+                                alert('로그인 성공!')
                                 window.location.replace("/")
+
                             } else {
                                 alert(response['msg'])
                             }
@@ -93,9 +106,9 @@
                 <h1 class="title">로그인 페이지</h1>
                 <div class="container" style="width:400px">
                     <div class="field is-horizontal">
-                        <div class="field-label is-normal">
-                            <label class="label" for="userid">ID</label>
-                        </div>
+{#                        <div class="field-label is-normal">#}
+{#                            <label class="label" for="userid">ID</label>#}
+{#                        </div>#}
                         <div class="field-body">
                             <div class="field">
                                 <div class="control">
@@ -106,9 +119,9 @@
                         </div>
                     </div>
                     <div class="field is-horizontal">
-                        <div class="field-label is-normal">
-                            <label class="label" for="userpw">PW</label>
-                        </div>
+{#                        <div class="field-label is-normal">#}
+{#                            <label class="label" for="userpw">PW</label>#}
+{#                        </div>#}
                         <div class="field-body">
                             <div class="field">
                                 <div class="control">
@@ -117,8 +130,11 @@
                             </div>
                         </div>
                     </div>
-                    <button class="button is-info" style="float: left;" onclick="login()">로그인</button>
-                    <button class="button is-info" style="float: right;" onclick='window.location.href ="/membership"'>회원가입</button>
+                    <div class="home-btn">
+                        <button class="button is-info" style="float: left;" onclick="login()">로그인</button>
+                        <button class="button is-light" style="float: right;" onclick='window.location.href ="/membership"'>회원가입</button>
+                    </div>
+
                 </div>
             </div>
         </div>

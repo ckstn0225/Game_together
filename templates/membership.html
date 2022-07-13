@@ -76,17 +76,16 @@
                     return;
                 }
 
-
                 // 아이디 중복 확인
                 $.ajax({
                     type: "POST",
                     url: "/sign_up/check_id",
                     data: {
-                        username_give: username
+                        username_give: 'username'
                     },
                     success: function (response) {
 
-                        if (response[exists]) {
+                        if (response["exists"]) {
                             alert("이미 존재하는 아이디입니다.")
                         } else {
                             alert("사용할 수 있는 아이디입니다.")
@@ -109,7 +108,7 @@
                     type: "POST",
                     url: "/sign_up/check_nick",
                     data: {
-                        usernick_give: 'usernick'
+                        nickname_give: 'usernick'
                     },
                     success: function (response) {
 
