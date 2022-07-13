@@ -143,16 +143,6 @@ def posting(keyword):
     except jwt.exceptions.DecodeError:
         return redirect(url_for("in_home", msg="로그인 정보가 존재하지 않습니다."))
 
-@app.route('/memo', methods=['GET'])
-def listing():
-    return jsonify({'all_articles': articles})
-
-
-## API 역할을 하는 부분
-@app.route('/memo', methods=['POST'])
-def saving():
-    return jsonify({'msg': '저장이 완료되었습니다!'})
-
 
 ##room post와 get
 @app.route("/room", methods=["POST"])
