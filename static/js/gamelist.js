@@ -98,8 +98,4 @@ function sign_out() {
     alert('로그아웃!')
     window.location.href = "/"
 }
-$(document).ready(function () {
-    call_userinfo()
-})
 
-function call_userinfo()
