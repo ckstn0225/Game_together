@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>인원모집 페이지</title>
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <!-- Font Awesome CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -36,44 +40,19 @@
         .back-btn:hover {
             border: 3px solid black;
         }
-        .wrap {
-            height: 400px;
-            width: 1000px;
-            margin: auto;
-
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
-
-            border-radius: 10px;
-            border: 2px solid black;
-        }
 
         .img-box {
+            height: 330px;
+            width: 250px;
+
             background-position: center;
             background-size: cover;
-            height: 380px;
-            width: 300px;
-            margin-right: 5px;
-            border-radius: 10px;
-            border: 1px solid black;
-
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
 
         }
         .input-box {
             height: 380px;
             width: 680px;
-
-            border-radius: 10px;
-            border: 2px solid black;
-
             padding-top: 100px;
-
         }
 
         .input-g {
@@ -86,132 +65,29 @@
             margin-bottom: 10px;
         }
 
-        .card {
-            max-width: 1200px;
-            width: 95%;
-            height: 300px;
-
-
-            margin: 20px auto 0px auto;
-
-            display: flex;
-            flex-direction: row;
-            justify-content: left;
-            align-items: center;
-
-            border-radius: 10px;
-            border: 2px solid black;
-        }
-
-        .card-left {
-            display: flex;
-            flex-direction: column;
-            justify-content: left;
-            align-items: center;
-
-            height: 300px;
-        }
-
-        .card-right {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-
-            margin: auto;
-
-            height: 300px;
-        }
-
         .card-right > button {
             margin: 10px auto 10px auto;
             height: 100px;
             width: 160px;
         }
 
-        .card-top {
+        .box{
             display: flex;
             flex-direction: row;
-            justify-content: left;
-            align-items: center;
-
-            margin-top: 10px;
-        }
-
-        .Rname {
-            width: 450px;
-            height: 40px;
-            margin-left: 20px;
-
             justify-content: center;
-            display: flex;
             align-items: center;
-
-            border-radius: 10px;
-            border: 2px solid black;
         }
+        .btns{
+            margin:auto;
 
-        .Uname {
-            width: 450px;
-            height: 40px;
-            margin-left: 10px;
-
+            display: flex;
+            flex-direction: column;
             justify-content: center;
-            display: flex;
             align-items: center;
-
-            border-radius: 10px;
-            border: 2px solid black;
         }
-
-        .card-bottom {
-            display: flex;
-            flex-direction: row;
-            justify-content: left;
-            align-items: center;
-
-            position: absolute;
-            bottom: 10px;
-        }
-
-        .time {
-            width: 450px;
-            height: 40px;
-            margin-left: 20px;
-
-            justify-content: center;
-            display: flex;
-            align-items: center;
-
-            border-radius: 10px;
-            border: 2px solid black;
-        }
-
-        .nums {
-            width: 450px;
-            height: 40px;
-            margin-left: 10px;
-
-            justify-content: center;
-            display: flex;
-            align-items: center;
-
-            border-radius: 10px;
-            border: 2px solid black;
-        }
-
-        .descript {
-            height: 175px;
-            width: 910px;
-            margin-left: 20px;
-            display: flex;
-            justify-content: left;
-            align-items: center;
-
-            margin-top: 10px;
-
-            border-radius: 10px;
-            border: 2px solid black;
+        .box{
+            margin: 20px auto 0px auto;
+            max-width: 1000px;
         }
 
     </style>
@@ -221,24 +97,27 @@
         });
 
         function save_room() {
-            let gname = $('#gname').text()
+            let gname = "{{ game_name }}"
             let title = $('#gtitle').val()
             let desc = $('#desc').val()
             let totalnum = $('#totalnum').val()
             let ddate = $('#dday').val()
             let dtime = $('#dtime').val()
-            let nick = $('#nick').text()
+            let nick = "{{ user_nick }}"
 
             $.ajax({
                 type: 'POST',
                 url: '/room',
-                data: {gname_give: gname, title_give: title, desc_give: desc, totalnum_give: totalnum,
-                 date_give: ddate, time_give: dtime, nick_give: nick},
+                data: {
+                    gname_give: gname, title_give: title, desc_give: desc, totalnum_give: totalnum,
+                    date_give: ddate, time_give: dtime, nick_give: nick
+                },
                 success: function (response) {
                     alert(response['msg'])
-                    window.location.reload()
+                    window.location.href = `/posting/${gname}?img={{ img_src }}`
                 }
             })
+
         }
 
         function show_room() {
@@ -249,8 +128,8 @@
                 data: {},
                 success: function (response) {
                     let rows = response['room']
-                    let me = $('#nick').text()
-                    let gn = $('#gname').text()
+                    let me = "{{ user_nick }}"
+                    let gn = "{{ game_name }}"
                     for (let i = 0; i < rows.length; i++) {
                         let gname = rows[i]['gname']
                         if (gn == gname) {
@@ -304,122 +183,78 @@
                             let temp_html = ``
                             if (!party.includes(me)){
                                 if(check){
-                                    temp_html = `<div class="card">
-                                            <div class="card-left">
-                                                <div class="card-top">
-                                                    <div class="Rname">
-                                                        <h4>${title}</h4>
-                                                    </div>
-                                                    <div class="Uname">
-                                                        <h4><i>${nick}</i></h4>
-                                                    </div>
-                                                </div>
-                                                <div class="descript">
-                                                    <h5>${desc}</h5>
-                                                </div>
-                                                <div class="card-bottom">
-                                                    <div class="time">
-                                                        <h4>${ddate}/${dtime}</h4>
-                                                    </div>
-                                                    <div class="nums">
-                                                        <h4>${num}/${totalnum}</h4>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="card-right">
-                                                <button type="button" class="btn btn-outline-primary" onclick="checkfin(${rid})">참가하기</button>
-                                                <button type="button" class="btn btn-outline-dark" onclick="showmember(${rid})">멤버보기</button>
-                                            </div>
-                                        </div>`
+                                    temp_html = `<div class="box" style="margin: 20px auto 0px auto; max-width: 1000px">
+                                                            <div style="max-width: 800px; width: 80%">
+                                                                <p>
+                                                                    <strong>${title}</strong> <small>@${nick}</small>
+                                                                    <br>
+                                                                    ${desc}
+                                                                </p>
+                                                                <p>
+                                                                    <strong>기한:<i>${ddate}/${dtime}</i></strong><strong> 인원수:${num}/${totalnum}</strong>
+                                                                </p>
+                                                            </div>
+                                                        <div class="btns">
+                                                            <button class="button is-info" onclick="checkfin(${rid})">참가하기</button>
+                                                            <button class="button is-success" style="margin-top:2px" onclick="showmember(${rid})">멤버보기</button>
+                                                        </div>
+                                                </div>`
                                 }
                                 else{
-                                        temp_html = `<div class="card">
-                                            <div class="card-left">
-                                                <div class="card-top">
-                                                    <div class="Rname">
-                                                        <h4>${title}</h4>
-                                                    </div>
-                                                    <div class="Uname">
-                                                        <h4><i>${nick}</i></h4>
-                                                    </div>
-                                                </div>
-                                                <div class="descript">
-                                                    <h5>${desc}</h5>
-                                                </div>
-                                                <div class="card-bottom">
-                                                    <div class="time">
-                                                        <h4>${ddate}/${dtime}</h4>
-                                                    </div>
-                                                    <div class="nums" style="border-color:red">
-                                                        <h4 style="color:red">마감</h4>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="card-right">
-                                                <button type="button" class="btn btn-outline-primary" disabled>참가하기</button>
-                                                <button type="button" class="btn btn-outline-dark" onclick="showmember(${rid})">멤버보기</button>
-                                            </div>
-                                        </div>`
+                                    temp_html = `<div class="box" style="margin: 20px auto 0px auto; max-width: 1000px">
+                                                            <div style="max-width: 800px; width: 80%">
+                                                                <p>
+                                                                    <strong>${title}</strong> <small>@${nick}</small>
+                                                                    <br>
+                                                                    ${desc}
+                                                                </p>
+                                                                <p>
+                                                                    <strong>기한:<i>${ddate}/${dtime}</i></strong><strong style="color:red;"> 마감</strong>
+                                                                </p>
+                                                            </div>
+                                                        <div class="btns">
+                                                            <button class="button is-info is-light" disabled>참가하기</button>
+                                                            <button class="button is-success" style="margin-top:2px" onclick="showmember(${rid})">멤버보기</button>
+                                                        </div>
+                                                </div>`
                                 }
                             }
                             else {
                                 if(check){
-                                    temp_html = `<div class="card">
-                                            <div class="card-left">
-                                                <div class="card-top">
-                                                    <div class="Rname">
-                                                        <h4>${title}</h4>
-                                                    </div>
-                                                    <div class="Uname">
-                                                        <h4><i>${nick}</i></h4>
-                                                    </div>
-                                                </div>
-                                                <div class="descript">
-                                                    <h5>${desc}</h5>
-                                                </div>
-                                                <div class="card-bottom">
-                                                    <div class="time">
-                                                        <h4>${ddate}/${dtime}</h4>
-                                                    </div>
-                                                    <div class="nums">
-                                                        <h4>${num}/${totalnum}</h4>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="card-right">
-                                                <button type="button" class="btn btn-outline-danger" onclick="leave(${rid})">취소하기</button>
-                                                <button type="button" class="btn btn-outline-dark" onclick="showmember(${rid})">멤버보기</button>
-                                            </div>
-                                        </div>`
+                                    temp_html = `<div class="box" style="margin: 20px auto 0px auto; max-width: 1000px">
+                                                            <div style="max-width: 800px; width: 80%">
+                                                                <p>
+                                                                    <strong>${title}</strong> <small>@${nick}</small>
+                                                                    <br>
+                                                                    ${desc}
+                                                                </p>
+                                                                <p>
+                                                                    <strong>기한:<i>${ddate}/${dtime}</i></strong><strong> 인원수:${num}/${totalnum}</strong>
+                                                                </p>
+                                                            </div>
+                                                        <div class="btns">
+                                                            <button class="button is-danger" onclick="leave(${rid})">취소하기</button>
+                                                            <button class="button is-success" style="margin-top:2px" onclick="showmember(${rid})">멤버보기</button>
+                                                        </div>
+                                                </div>`
                                 }
                                 else{
-                                        temp_html = `<div class="card">
-                                            <div class="card-left">
-                                                <div class="card-top">
-                                                    <div class="Rname">
-                                                        <h4>${title}</h4>
-                                                    </div>
-                                                    <div class="Uname">
-                                                        <h4><i>${nick}</i></h4>
-                                                    </div>
-                                                </div>
-                                                <div class="descript">
-                                                    <h5>${desc}</h5>
-                                                </div>
-                                                <div class="card-bottom">
-                                                    <div class="time">
-                                                        <h4>${ddate}/${dtime}</h4>
-                                                    </div>
-                                                    <div class="nums" style="border-color:red">
-                                                        <h4 style="color:red">마감</h4>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="card-right">
-                                                <button type="button" class="btn btn-outline-danger" onclick="leave(${rid})">취소하기</button>
-                                                <button type="button" class="btn btn-outline-dark" onclick="showmember(${rid})">멤버보기</button>
-                                            </div>
-                                        </div>`
+                                    temp_html = `<div class="box" style="margin: 20px auto 0px auto; max-width: 1000px">
+                                                            <div style="max-width: 800px; width: 80%">
+                                                                <p>
+                                                                    <strong>${title}</strong> <small>@${nick}</small>
+                                                                    <br>
+                                                                    ${desc}
+                                                                </p>
+                                                                <p>
+                                                                    <strong>기한:<i>${ddate}/${dtime}</i></strong><strong style="color:red;"> 마감</strong>
+                                                                </p>
+                                                            </div>
+                                                        <div class="btns">
+                                                            <button class="button is-danger" onclick="leave(${rid})">취소하기</button>
+                                                            <button class="button is-success" style="margin-top:2px" onclick="showmember(${rid})">멤버보기</button>
+                                                        </div>
+                                                </div>`
                                 }
 
                             }
@@ -487,93 +322,70 @@
     </script>
 </head>
 <body>
-<div class="top">
-    <button class="back-btn" onclick='window.location.href = "/gamelist"';>뒤로가기</button>
-    <div class="login">
-       <h1 id="nick">{{user_nick}}</h1>
-        <h1>으로 접속중</h1>
-    </div>
-</div>
 
-<div class="wrap">
-    <div class="img-box" style="background-image:url({{ img_src }})">
+<section class="hero is-info">
+    <div class="hero-head">
+        <nav class="navbar">
+            <div class="container">
+                <div class="navbar-brand">
+                    <a class="navbar-item" href="/gamelist">
+                        <img src="https://bulma.io/images/bulma-type-white.png" alt="Logo">
+                    </a>
+                    <span class="navbar-burger" data-target="navbarMenuHeroB">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+                </div>
+                <div id="navbarMenuHeroB" class="navbar-menu">
+                    <div class="navbar-end">
+                        <div class="login">
+                            <h1 id="nick">{{ user_nick }}</h1>
+                            <h1>으로 접속중</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
     </div>
-    <div class="input-box">
-        <h2 id="gname" style="font-weight: bold; text-align: center" >{{game_name}}</h2>
-        <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">방 이름</span>
-            <input type="text" class="form-control" aria-describedby="basic-addon1" id="gtitle">
-        </div>
-        <div class="input-group">
-            <span class="input-group-text">본문</span>
-            <textarea class="form-control" aria-label="With textarea" id="desc"></textarea>
-        </div>
-        <div class="input-g">
-            <input type='date' id="dday">
-            <input type='time' id="dtime">
-            <input type='number' min='2' id="totalnum">
-        </div>
-        <div class="d-grid gap-2 col-6 mx-auto">
-            <button class="btn btn-primary" type="button" onclick="save_room()">모집하기</button>
+
+    <div class="hero-body">
+        <div class="container has-text-centered">
+            <form class="box" style="max-width: 1000px; margin: auto">
+                <div class="media-left">
+                    <div class="img-box" style="background-image: url('{{ img_src }}')">
+                    </div>
+                </div>
+                <div class="input-box">
+                    <h2 id="gname" style="font-weight: bold; text-align: center">{{ game_name }}</h2>
+                    <div class="field ">
+                        <div class="control">
+                            <input class="input" type="text" placeholder="방 이름" id="gtitle">
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <div class="control">
+                            <input class="input" type="text" placeholder="본문" id="desc">
+                        </div>
+                    </div>
+                    <div class="input-g">
+                        <input type='date' id="dday">
+                        <input type='time' id="dtime">
+                        <input type='number' min='2' id="totalnum">
+                    </div>
+                    <button class="button is-info is-large is-fullwidth" onclick="save_room()">모집하기</button>
+
+                </div>
+
+            </form>
         </div>
     </div>
-</div>
+
+
+</section>
 
 <div id="main">
-<div class="card">
-    <div class="card-left">
-        <div class="card-top">
-            <div class="Rname">
-                <h4>게임방 이름</h4>
-            </div>
-            <div class="Uname">
-                <h4><i>유저이름</i></h4>
-            </div>
-        </div>
-        <div class="descript">
-            <h5>본문내용</h5>
-        </div>
-        <div class="card-bottom">
-            <div class="time">
-                <h4>2022.07.11. / 17:11</h4>
-            </div>
-            <div class="nums">
-                <h4>5/8</h4>
-            </div>
-        </div>
-    </div>
-    <div class="card-right">
-        <button type="button" class="btn btn-outline-primary">참가하기</button>
-        <button type="button" class="btn btn-outline-dark">멤버보기</button>
-    </div>
-</div>
-<div class="card">
-    <div class="card-left">
-        <div class="card-top">
-            <div class="Rname">
-                <h4>게임방 이름</h4>
-            </div>
-            <div class="Uname">
-                <h4><i>유저이름</i></h4>
-            </div>
-        </div>
-        <div class="descript">
-            <h5>본문내용</h5>
-        </div>
-        <div class="card-bottom">
-            <div class="time">
-                <h4>2022.07.11. / 17:11</h4>
-            </div>
-            <div class="nums" style="border-color:red">
-                <h4 style="color:red">마감</h4>
-            </div>
-        </div>
-    </div>
-    <div class="card-right">
-        <button type="button" class="btn btn-outline-danger">취소하기</button>
-        <button type="button" class="btn btn-outline-dark">멤버보기</button>
-    </div>
-</div>
 </div>
 
 </body>
