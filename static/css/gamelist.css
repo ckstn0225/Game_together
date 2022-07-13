@@ -10,7 +10,7 @@
 .is-large {
     min-height: border-box;
     max-height: border-box;
-    height: 100px;
+    height: auto;
 }
 
 .formargin {

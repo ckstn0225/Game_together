@@ -1,147 +1,170 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <section class="hero is-info is-fullheight">
-        <!-- Webpage Title -->
-        <title>Game,together!</title>
+<head>
 
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Webpage Title -->
+    <title>Game,together!</title>
 
-        <!-- Bulma CSS -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
-        <!-- JS -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        <!-- 구글폰트 -->
-        <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap"
-              rel="stylesheet">
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 
-        <style>
-            * {
-                font-family: 'Gamja Flower', cursive;
-            }
-            .main-box{
-                position: absolute;
-                left: 50%;
-                top: 50%;
-                transform: translate(-50%, -50%);
-                display: flex;
-                flex-direction: row;
-                align-items: flex-start;
-                justify-content: space-between;
-            }
+    <!-- 구글폰트 -->
+    <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap"
+          rel="stylesheet">
 
-            .main-img{
-                margin: auto 10px auto;
-                width: 50%;
-                box-shadow: 0px 0px 5px 0px;
-                max-height: 30%;
-                min-height: 90%;
-            }
+    <style>
+        * {
+            font-family: 'Gamja Flower', cursive;
+        }
 
-            .has-text-centered{
-                margin: auto;
-                background-color: lightsteelblue;
-                width: 500px;
-                box-shadow: 0px 0px 5px 0px;
-            }
+        .main-box {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            justify-content: space-between;
+        }
 
-            .home-btn{
+        .main-img {
+            border-radius: 50px;
+            margin: auto;
+            width: 1000px;
+            display: flex;
+            flex-direction: row;
 
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-                justify-content: center;
-            }
+        }
 
-            .home-btn>.button {
-                margin-right: 15px;
-            }
+        .has-text-centered {
+            margin: auto;
+            background-color: white;
+            width: 500px;
+            box-shadow: 0px 0px 5px 0px;
+            border-radius: 50px;
+            width: 10000px;
+        }
+
+        .home-btn {
+
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .home-btn > .button {
+            margin-right: 15px;
+        }
 
 
-        </style>
-        <script>
-            {% if msg %}
-                alert("{{ msg }}")
-            {% endif %}
+    </style>
+    <script>
+        {% if msg %}
+            alert("{{ msg }}")
+        {% endif %}
 
-                function login() {
-                    let username = $("#userid").val()
-                    let password = $("#userpw").val()
+        function login() {
+            let username = $("#userid").val()
+            let password = $("#userpw").val()
 
-                    if (username == "") {
-                        alert("아이디를 입력해주세요.")
-                        return;
-                    } else if (password == "") {
-                        alert("비밀번호를 입력해주세요.")
-                        return;
+            if (username == "") {
+                alert("아이디를 입력해주세요.")
+                return;
+            } else if (password == "") {
+                alert("비밀번호를 입력해주세요.")
+                return;
+            } else {
+                $.ajax({
+                    type: "POST",
+                    url: "/api/login",
+                    data: {
+                        username_give: username,
+                        password_give: password
+                    },
+                    success: function (response) {
+                        if (response['result'] == 'success') {
+                            $.cookie('mytoken', response['token'], {path: '/'});
+                            window.location.replace("/")
                         } else {
-                            $.ajax({
-                            type: "POST",
-                            url: "/api/login",
-                            data: {
-                                username_give: username,
-                                password_give: password
-                            },
-                            success: function (response) {
-                                if (response['result'] == 'success') {
-                                    $.cookie('mytoken', response['token'], {path: '/'});
-                                    window.location.replace("/")
-                                } else {
-                                    alert(response['msg'])
-                                }
-                            }
-                            });
+                            alert(response['msg'])
                         }
+                    }
+                });
+            }
 
-                }
+        }
 
 
+    </script>
 
-        </script>
-        </section>
-    </head>
-    <body>
-        <div class="main-box">
-            <img class="main-img" src="../static/img/main.jpg" alt="main image">
-            <div class="section has-text-centered">
-                <h1 class="title">로그인 페이지</h1>
-                <div class="container" style="width:400px">
-                    <div class="field is-horizontal">
-{#                        <div class="field-label is-normal">#}
-{#                            <label class="label" for="userid">ID</label>#}
-{#                        </div>#}
-                        <div class="field-body">
-                            <div class="field">
-                                <div class="control">
-                                    <input type="text" class="input" id="userid" aria-describedby="emailHelp"
-                                           placeholder="아이디">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="field is-horizontal">
-{#                        <div class="field-label is-normal">#}
-{#                            <label class="label" for="userpw">PW</label>#}
-{#                        </div>#}
-                        <div class="field-body">
-                            <div class="field">
-                                <div class="control">
-                                    <input type="password" class="input" id="userpw" placeholder="패스워드">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="home-btn">
-                        <button class="button is-info" style="float: left;" onclick="login()">로그인</button>
-                        <button class="button is-light" style="float: right;" onclick='window.location.href ="/membership"'>회원가입</button>
-                    </div>
+</head>
+<body>
+<section class="hero is-info is-fullheight">
+    <div class="hero-head">
+        <nav class="navbar">
+
+            <div class="container">
+
+                <div class="navbar-brand is-light">
+
+                </div>
+                <div id="navbarMenuHeroB" class="navbar-menu">
 
                 </div>
             </div>
+        </nav>
+        <img class="main-img" src="../static/img/main.jpg" alt="main image">
+    </div>
+
+
+    <div class="main-box">
+        <div class="section has-text-centered">
+            <h1 class="title" style="color: deepskyblue; font-size: 60px; margin-left: 40px">Game_Together</h1>
+            <div class="container" style="width:400px">
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label" for="userid">ID</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <div class="control">
+                                <input type="text" class="input" id="userid" aria-describedby="emailHelp"
+                                       placeholder="아이디">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label" for="userpw">PW</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <div class="control">
+                                <input type="password" class="input" id="userpw" placeholder="패스워드">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="home-btn">
+                    <button class="button is-info" style="float: left;" onclick="login()">로그인</button>
+                    <button class="button is-light" style="float: right;" onclick='window.location.href ="/membership"'>
+                        회원가입
+                    </button>
+                </div>
+
+            </div>
         </div>
-    </body>
+    </div>
+</section>
+</body>
 </html>
