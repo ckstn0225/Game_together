@@ -136,14 +136,18 @@ def posting(keyword):
         user_info = db.user.find_one({"u_id": payload["id"]})
         user_nick = user_info['nick']
         game_name = keyword
-        img_receive = request.args.get("img")
-        return render_template('posting.html', user_info=user_info, user_nick=user_nick,
-                               game_name=game_name, img_src = img_receive)
+        return render_template('posting.html', user_info=user_info, user_nick=user_nick, game_name=game_name)
     except jwt.ExpiredSignatureError:
         return redirect(url_for("in_home", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
         return redirect(url_for("in_home", msg="로그인 정보가 존재하지 않습니다."))
 
+@app.route("/room/gameimage", methods=["POST"])
+def roomimage_get():
+    gamename_receive = request.form['g_give']
+    game_info = db.games.find_one({"G_name": gamename_receive})
+    img_receive = game_info['Img']
+    return jsonify({'img_src': img_receive})
 
 ##room post와 get
 @app.route("/room", methods=["POST"])

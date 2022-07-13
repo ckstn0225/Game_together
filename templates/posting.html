@@ -101,6 +101,7 @@
     </style>
     <script>
         $(document).ready(function () {
+            showimg("{{ game_name }}")
             show_room()
         });
 
@@ -340,6 +341,24 @@
                 }
             });
         }
+
+        function showimg(gamename) {
+            $.ajax({
+                type: "POST",
+                url: "/room/gameimage",
+                data: {g_give: gamename},
+                success: function (response) {
+                    let gameimg = response["img_src"]
+                    let temp_html = ``
+                    if (gameimg.indexOf('file') == -1) {
+                        temp_html = `<div class="img-box" style="background-image: url('${gameimg}')"></div>`
+                    } else {
+                        temp_html = `<div class="img-box" style="background-image: url('../static/img/${gameimg}')"></div>`
+                    }
+                    $('#gimg').append(temp_html)
+                }
+            });
+        }
     </script>
 </head>
 <body>
@@ -374,7 +393,7 @@
         <div class="container has-text-centered">
             <form class="box" style="max-width: 1000px; margin: auto">
                 <div class="media-left">
-                    <div class="img-box" style="background-image: url('{{ img_src }}')">
+
                     </div>
                 </div>
                 <div class="input-box">

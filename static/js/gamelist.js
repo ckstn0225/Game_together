@@ -64,7 +64,7 @@ function get_games() {
                                         <div class="card-content G_name">
                                             ${gamename}
                                         </div>
-                                        <button class="button is-info b_jump" onclick='to_room("${gamename}","${gameimg}")'>채널접속</button>
+                                        <button class="button is-info b_jump" onclick='to_room("${gamename}")'>채널접속</button>
                                     </div>`
                     } else {
                         html_temp = `<div class="card to_left g_box">
@@ -75,7 +75,7 @@ function get_games() {
                                         <div class="card-content G_name">
                                             ${gamename}
                                         </div>
-                                        <button class="button is-info b_jump" onclick='to_room("${gamename}","../static/img/${gameimg}")'>채널접속</button>
+                                        <button class="button is-info b_jump" onclick='to_room("${gamename}")'>채널접속</button>
                                     </div>`
                     }
                     $("#games").append(html_temp)
@@ -88,7 +88,7 @@ function get_games() {
 
 //방으로 이동 시 방번호 지정
 function to_room(game,img) {
-               window.location.href = `/posting/${game}?img=${img}`
+               window.location.href = `/posting/${game}`
             }
 
 
