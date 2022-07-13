@@ -30,7 +30,7 @@
         $(document).ready(function () {
             bsCustomFileInput.init()
         })
-        function add_image() {
+        function add_image(input) {
             let file = input.files[0];
             let newImage = document.createElement("img");
             newImage.setAttribute("class","img");
@@ -42,11 +42,9 @@
             {#newImage.style.visibility = "hidden";#}
             newImage.style.objectFit = "contain";
 
-            let container = document.getElementById('image-show');
-            $('#image-show').empty()
+            let container = document.getElementById('show-image');
+            $('#show-image').empty()
             container.appendChild(newImage);
-            console.log(newImage)
-            alert('아직 기능 미구현입니다.')
         }
         function add_game() {
             let game = $('#game').val()
@@ -109,9 +107,11 @@
     <div class="mygame">
         <div class="mb-3">
             <input id="game" class="form-control" placeholder="추가할 게임명칭을 입력해주세요">
-            <img class="example-image" src="../static/img/img_dummy.jpg">
+            <div id="show-image">
+                <img id="example-image" class="example-image" src="../static/img/img_dummy.jpg">
+            </div>
             <label for="file" class="form-label">게임 사진을 업로드해주세요</label>
-            <input class="form-control" type="file" id="file">
+            <input class="form-control" type="file" id="file" accept="image/*" onchange="add_image(this)">
         </div>
             <button onclick="add_game()" type="button" class="btn btn-outline-dark">개설하기</button>
             <button onclick="get_game_test()" type="button" class="btn btn-outline-dark">DB 저장확인 용</button>
