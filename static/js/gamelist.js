@@ -99,3 +99,6 @@ function sign_out() {
     window.location.href = "/"
 }
 
+function makegamelist() {
+   window.location.href = "/makegamelist"
+}
