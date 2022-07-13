@@ -47,16 +47,11 @@
                 </div>
                 <div id="navbarMenuHeroB" class="navbar-menu">
                     <div class="navbar-end">
-                        <a class="navbar-item">
+                        <a type="button" class="navbar-item" onclick='$("#modal").addClass("is-active")'>
                             어서오세요! {{ user_nick }}님!
                         </a>
                         <span class="navbar-item">
-              <button class="button" onclick='$("#modal").addClass("is-active")'>
-                <span class="icon">
-                  <i class="fa fa-github"></i>
-                </span>
-                <span>Log Out</span>
-              </button>
+
             </span>
                     </div>
                 </div>
@@ -66,13 +61,18 @@
 </section>
 <div class="container has-text-centered formargin" id="games">
 
-    <div class="modal" id="modal">
+    <div class="modal" style="" id="modal">
         <div class="modal-background"></div>
         <div class="modal-content">
             <div class="card">
                 <div class="card-content">
                     <p class="title" style="color:black">
-                        진짜로 나가시나요..?
+                    <br>
+                        <p style="font-size: 50px;">
+                        {{ user_nick }}({{ user_id }})</p>
+                        <br>
+                        <br>
+                        <br>
                     </p>
                 </div>
                 <footer class="card-footer">
