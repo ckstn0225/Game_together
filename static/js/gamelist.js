@@ -45,7 +45,7 @@ $(document).ready(function () {
 function get_games() {
     $.ajax({
             type: "GET",
-            url: `/get_list`,
+            url: `/game`,
             data: {},
             success: function (response) {
                 let posts = response['games']
@@ -53,15 +53,29 @@ function get_games() {
                 for (let i = 0; i < posts.length; i++) {
                     let gamename = posts[i]['G_name']
                     let gameimg = posts[i]['Img']
-                    let html_temp = `<div class="card to_left g_box" onclick='to_room("${gamename}")'>
+
+                    let html_temp = ``
+                    if(gameimg.indexOf('file') == -1) {
+                        html_temp = `<div class="card to_left g_box" onclick='to_room("${gamename}")'>                    
                                         <div class="card-image">
-                                            <img src="../static/${gameimg}>
+                                            <img src="${gameimg}"
                                                  class="g_image" alt="Placeholder image">
                                         </div>
                                         <div class="card-content G_name">
                                             ${gamename}
                                         </div>
                                     </div>`
+                    } else {
+                        html_temp = `<div class="card to_left g_box" onclick='to_room("${gamename}")'>
+                                        <div class="card-image">
+                                            <img src="../static/img/${gameimg}"
+                                                 alt="Placeholder image">
+                                        </div>
+                                        <div class="card-content G_name">
+                                            ${gamename}
+                                        </div>
+                                    </div>`
+                    }
                     $("#games").append(html_temp)
 
                 }
