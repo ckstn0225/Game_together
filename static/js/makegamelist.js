@@ -14,10 +14,6 @@ function image_add(input) {
 
     newImage.style.width = "auto";
     newImage.style.height = "140px";
-    {
-        #newImage.style.visibility = "hidden";
-    #
-    }
     newImage.style.objectFit = "contain";
 
     let container = document.getElementById('show-image');
