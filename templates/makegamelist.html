@@ -1,151 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>게임목록추가 페이지</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-            crossorigin="anonymous"></script>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <!-- Font Awesome CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.js"></script>
     <!-- 구글폰트 -->
-    <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap"
-          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Stylish&display=swap" rel="stylesheet">
+    <link href=../static/css/makegamelist.css rel="stylesheet">
+    <script src="{{ url_for('static', filename='js/gamelist.js') }}"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap" rel="stylesheet">
+
+    <title>게임목록추가 페이지</title>
 
     <style>
-        * {
-            font-family: 'Gamja Flower', cursive;
-        }
-        .mygame {
-            width: 95%;
-            max-width: 500px;
-            height: 350px;
-            margin: 20px auto 20px auto;
-
-            box-shadow: 0px 0px 3px 0px black;
-            padding: 20px;
-        }
-        .example-image {
-            width: auto;
-            height: 140px;
-            margin: 10px auto;
-        }
     </style>
-    <script>
-        let isGameChecked = false;
-        let result = false;
 
-        $(document).ready(function () {
-            bsCustomFileInput.init()
-        })
-
-        function image_add(input) {
-            let file = input.files[0];
-            let newImage = document.createElement("img");
-            newImage.setAttribute("class","img");
-
-            newImage.src = URL.createObjectURL(file);
-
-            newImage.style.width = "auto";
-            newImage.style.height = "140px";
-            {#newImage.style.visibility = "hidden";#}
-            newImage.style.objectFit = "contain";
-
-            let container = document.getElementById('show-image');
-            $('#show-image').empty()
-            container.appendChild(newImage);
-        }
-        
-        function game_check() {
-            let game = $('#game').val()
-            if (game == "") {
-                alert("게임명칭을 입력해주세요.")
-                return;
-            }
-            $.ajax({
-                type: "POST",
-                url: "/game/name",
-                data: {
-                    game_give: game
-                },
-                success: function (response) {
-                    result = response["exists"]
-                    if (result) {
-                        alert("게임명칭이 중복되었습니다.\n기존 게임방에 참여해주세요.")
-                    } else {
-                        alert("추가할 수 있는 게임명칭입니다.")
-                    }
-                    isGameChecked = true
-                }
-            });
-        }
-
-        function game_add() {
-            let game = $('#game').val()
-
-            let file = $('#file')[0].files[0]
-
-            if (game == "") {
-                alert("게임명칭을 입력해주세요.")
-                return;
-            } else if (file == null) {
-                alert("이미지를 추가해주세요.")
-                return;
-            } else if (isGameChecked == false) {
-                alert("게임명칭 중복체크를 해주세요.")
-                return;
-            } else if (result == true) {
-                alert("게임명칭이 중복되었습니다.\n기존 게임방에 참여해주세요.")
-                return;
-            }
-            let form_data = new FormData()
-
-            form_data.append("file_give", file)
-            form_data.append("game_give", game)
-
-            $.ajax({
-                type: "POST",
-                url: "/game",
-                data: form_data,
-                cache: false,
-                contentType: false,
-                processData: false,
-                success: function (response) {
-                    alert(response["msg"])
-                    window.location.href = `/gamelist`
-                }
-            });
-        }
-
-        function get_game_test() {
-            $('#card-box').removeAttr('hidden','true')
-            $.ajax({
-                type: "GET",
-                url: "/game",
-                data: {},
-                success: function (response) {
-                    let games = response['games']
-                    for(let i = 0; i < games.length; i++) {
-                        let G_name = games[i]['G_name']
-                        let Img = games[i]['Img']
-                        console.log(G_name, Img)
-                        let temp_html = `<div class="col">
-                                            <div class="card">
-                                                <img src="../static/img/${Img}" class="card-img-top" alt="...">
-                                                <div class="card-body">
-                                                    <h5 class="card-title">${G_name}</h5>
-                                                    <p class="card-text">${G_name}</p>
-                                                </div>
-                                            </div>
-                                          </div>`
-                        $('#card-box').append(temp_html)
-                    }
-                }
-            });
-        }
-    </script>
 </head>
 <body>
     <button onclick='window.location.href = "/gamelist"'; type="button" class="btn btn-outline-dark">뒤로가기</button>

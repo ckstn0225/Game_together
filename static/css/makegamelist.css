@@ -1,0 +1,23 @@
+* {
+    font-family: 'Gamja Flower', cursive;
+}
+
+.navbar-item{
+    font-size: 30px;
+}
+
+.mygame {
+    width: 95%;
+    max-width: 500px;
+    height: 350px;
+    margin: 20px auto 20px auto;
+
+    box-shadow: 0px 0px 3px 0px black;
+    padding: 20px;
+}
+
+.example-image {
+    width: auto;
+    height: 140px;
+    margin: 10px auto;
+}
