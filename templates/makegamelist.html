@@ -31,8 +31,40 @@
 
 </head>
 <body>
-    <button onclick='window.location.href = "/gamelist"'; type="button" class="btn btn-outline-dark">뒤로가기</button>
+    <section class="hero is-info is-large">
+        <div class="hero-head">
+            <nav class="navbar">
+                <div class="container">
+                    <div class="navbar-brand is-light">
+                        <a class="navbar-item" href="/gamelist">
+                            Game_together
+                        </a>
+
+                    </div>
+                    <div id="navbarMenuHeroB" class="navbar-menu">
+                        <div class="navbar-end">
+                            <a class="navbar-item">
+                                어서오세요! {{ user_nick }}님!
+                            </a>
+                            <span class="navbar-item">
+                      <button class="button" onclick='$("#modal").addClass("is-active")'>
+                        <span class="icon">
+                          <i class="fa fa-github"></i>
+                        </span>
+                        <span>Log Out</span>
+                      </button>
+                    </span>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </section>
+    <div class="mini-title">
+        <h1>생성할 게임의 명칭, 이미지를 첨부해주세요</h1>
+    </div>
     <div class="mygame">
+
         <div class="mb-3">
             <input id="game" class="form-control" placeholder="추가할 게임명칭을 입력해주세요">
             <div class="control-check" id="btn-check-id">

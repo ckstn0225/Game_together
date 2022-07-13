@@ -6,6 +6,16 @@
     font-size: 30px;
 }
 
+.is-large {
+    min-height: border-box;
+    max-height: border-box;
+    height: 100px;
+}
+.mini-title {
+    width: 95%;
+    max-width: 500px;
+    margin: 20px auto 20px auto;
+}
 .mygame {
     width: 95%;
     max-width: 500px;
