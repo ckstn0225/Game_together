@@ -97,7 +97,7 @@
                         if (response["exists"]) {
                             $('#help-id').text("이미 선점한 아이디입니다.").removeClass("is-safe").addClass("is-danger")
                         } else {
-                            $('#help-id').text("사용할 수 있는 아이디입니다.").removeClass("is-danger").assClass("is-success")
+                            $('#help-id').text("사용할 수 있는 아이디입니다.").removeClass("is-danger").addClass("is-success")
                             return;
                         }
 
@@ -126,7 +126,7 @@
                           $('#help-nick').text("이미 선점한 닉네임입니다.").removeClass("is-safe").addClass("is-danger")
                           return;
                         } else {
-                          $('#help-nick').text("사용할 수 있는 닉네임입니다.").removeClass("is-danger").assClass("is-success")
+                          $('#help-nick').text("사용할 수 있는 닉네임입니다.").removeClass("is-danger").addClass("is-success")
                           return;
                         }
 
@@ -151,18 +151,16 @@
                    return;
                } else {
                    $('#help-id').text("사용가능합니다.")
-                   return;
                }
 
                if (usernick == "") {
-                   $('#help-nick').text("아이디를 입력해주세요.")
+                   $('#help-nick').text("닉네임을 입력해주세요.")
                    return;
                } else if ($("#help-nick").hasClass("is-danger")) {
                    $('#help-nick').text("닉네임 중복확인을 해주세요.")
                    return;
                } else {
                    $('#help-nick').text("사용가능합니다.")
-                   return;
                }
 
                if (password == "") {
@@ -173,18 +171,16 @@
                    return;
                } else {
                    $('#help-password').text("사용가능한 비밀번호입니다.").removeClass("is-danger").addClass("is-success")
-                   return;
                }
 
                if (password2 == "") {
                    $('#help-password2').text("비밀번호가 일치하지 않습니다.").removeClass("is-safe").addClass("is-danger")
                    return;
-               } else if (password2 != password1) {
+               } else if (password2 != password) {
                    $('#help-password2').text("비밀번호가 일치하지 않습니다.").removeClass("is-safe").addClass("is-danger")
                    return;
                } else {
                    $('#help-password2').text("사용가능한 비밀번호입니다.").removeClass("is-danger").addClass("is-success")
-                   return;
 
 
                    $.ajax({
