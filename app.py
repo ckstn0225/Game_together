@@ -31,7 +31,7 @@ def home():
     except jwt.ExpiredSignatureError:
         return redirect(url_for("in_home", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
-        return redirect(url_for("in_home", msg="로그인 정보가 존재하지 않습니다."))
+        return redirect(url_for("in_home"))
 
 
 @app.route('/home')
@@ -83,6 +83,14 @@ def sign_up():
 def check_id():
     username_receive = request.form['username_give']
     exists = bool(db.user.find_one({"u_id": username_receive}))
+    print(exists)
+    return jsonify({'result': 'success', 'exists': exists})
+
+# 중복체크(닉네임)
+@app.route('/sign_up/check_nick', methods=['POST'])
+def check_nick():
+    nickname_receive = request.form['nickname_give']
+    exists = bool(db.user.find_one({"nick": nickname_receive}))
     print(exists)
     return jsonify({'result': 'success', 'exists': exists})
 

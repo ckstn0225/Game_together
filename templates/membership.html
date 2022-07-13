@@ -25,40 +25,32 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 
         <style>
-            .container{
-
-                padding: 50px;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                box-shadow: 0px 0px 5px 0px lightsteelblue;
+            <style>
+            .box{
+              max-width: 600px;
+              min-width:500px;
+              padding: 50px;
+              margin: auto;
             }
 
-            .container>.field{
+            .box>.field{
                 display: flex;
                 flex-direction: column;
                 align-items: center;
                 justify-content: space-between;
             }
 
-            .container>.field>.field-label>.field-body{
+            .box>.field>.field-label>.field-body{
                 margin-left: 10px;
             }
 
-            .container>.field>.field-label{
+            .box>.field>.field-label{
                 display: flex;
                 flex-direction: row;
                 align-items: center;
-                justify-content: space-between;
+                justify-content: center;
 
                 width: 400px;
-            }
-
-            .container>.member-btn{
-                align-items: center;
-                padding-top: 10px;
-
             }
 
         </style>
@@ -116,7 +108,7 @@
                     type: "POST",
                     url: "/sign_up/check_nick",
                     data: {
-                        usernick_give: usernick
+                        nickname_give: usernick
                     },
                     success: function (response) {
 
@@ -172,7 +164,7 @@
             }
 
             function cancel() {
-              window.location.replace('/')
+              window.location.replace('/login')
             }
 
         </script>
