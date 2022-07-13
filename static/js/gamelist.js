@@ -69,7 +69,7 @@ function get_games() {
                         html_temp = `<div class="card to_left g_box" onclick='to_room("${gamename}")'>
                                         <div class="card-image">
                                             <img src="../static/img/${gameimg}"
-                                                 alt="Placeholder image">
+                                                 class="g_image" alt="Placeholder image">
                                         </div>
                                         <div class="card-content G_name">
                                             ${gamename}
