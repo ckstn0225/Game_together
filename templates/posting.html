@@ -490,16 +490,16 @@
 <div class="top">
     <button class="back-btn" onclick='window.location.href = "/gamelist"';>뒤로가기</button>
     <div class="login">
-       <h1 id="nick">닉네임</h1>
+       <h1 id="nick">{{user_nick}}</h1>
         <h1>으로 접속중</h1>
     </div>
 </div>
 
 <div class="wrap">
-    <div class="img-box" style="background-image:url('https://t1.daumcdn.net/cfile/tistory/2463694C53D0A5D806')">
-        <h3 id="gname">게임이름</h3>
+    <div class="img-box" style="background-image:url({{ img_src }})">
     </div>
     <div class="input-box">
+        <h2 id="gname" style="font-weight: bold; text-align: center" >{{game_name}}</h2>
         <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon1">방 이름</span>
             <input type="text" class="form-control" aria-describedby="basic-addon1" id="gtitle">

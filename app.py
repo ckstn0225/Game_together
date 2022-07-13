@@ -111,10 +111,21 @@ def membership():
     return render_template('membership.html')
 
 
-@app.route('/posting')
-def posting():
-    return render_template('posting.html')
-
+@app.route('/posting/<keyword>')
+def posting(keyword):
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_info = db.user.find_one({"u_id": payload["id"]})
+        user_nick = user_info['nick']
+        game_name = keyword
+        img_receive = request.args.get("img")
+        return render_template('posting.html', user_info=user_info, user_nick=user_nick,
+                               game_name=game_name, img_src = img_receive)
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("in_home", msg="로그인 시간이 만료되었습니다."))
+    except jwt.exceptions.DecodeError:
+        return redirect(url_for("in_home", msg="로그인 정보가 존재하지 않습니다."))
 
 @app.route('/memo', methods=['GET'])
 def listing():
