@@ -1,0 +1,30 @@
+
+.luffy {
+    max-height: 200%;
+    height: border-box;
+}
+
+.formargin {
+    margin-top: 50px;
+
+}
+
+.to_left {
+    float: left;
+    margin: 20px;
+}
+
+.G_name {
+    font-size: 25px;
+}
+
+.g_box {
+    width: 250px;
+    height: 250px;
+}
+
+.g_image {
+    width: 250px;
+    height: 150px;
+}
+

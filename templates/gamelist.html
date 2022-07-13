@@ -17,31 +17,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
     <!-- 구글폰트 -->
     <link href="https://fonts.googleapis.com/css?family=Stylish&display=swap" rel="stylesheet">
+    <link href=../static/css/gamelist.css rel="stylesheet">
     <script src="{{ url_for('static', filename='js/gamelist.js') }}"></script>
+
 
     <title>게임투게더</title>
 
     <!-- style -->
     <style type="text/css">
-
-        .luffy{
-            max-height: 200%;
-            height: border-box;
-        }
-        .formargin{
-            margin-top: 50px;
-
-        }
-
-        .to_left {
-            float: left;
-            margin: 20px;
-        }
-
-        .G_name {
-            font-size: 25px;
-        }
-
 
     </style>
 
@@ -49,27 +32,27 @@
 </head>
 
 <div class="luffy">
-<section class="hero is-info is-large">
-  <div class="hero-head">
-    <nav class="navbar">
-      <div class="container">
-        <div class="navbar-brand">
-          <a class="navbar-item">
-            <img src=""
-                 alt="Logo">
-          </a>
-          <span class="navbar-burger" data-target="navbarMenuHeroB">
+    <section class="hero is-info is-large">
+        <div class="hero-head">
+            <nav class="navbar">
+                <div class="container">
+                    <div class="navbar-brand">
+                        <a class="navbar-item">
+                            <img src=""
+                                 alt="Logo">
+                        </a>
+                        <span class="navbar-burger" data-target="navbarMenuHeroB">
             <span></span>
             <span></span>
             <span></span>
           </span>
-        </div>
-        <div id="navbarMenuHeroB" class="navbar-menu">
-          <div class="navbar-end">
-            <a class="navbar-item">
-              어서오세요! {{user_nick}}님!
-            </a>
-            <span class="navbar-item">
+                    </div>
+                    <div id="navbarMenuHeroB" class="navbar-menu">
+                        <div class="navbar-end">
+                            <a class="navbar-item">
+                                어서오세요! {{ user_nick }}님!
+                            </a>
+                            <span class="navbar-item">
               <button class="button" onclick="sign_out()">
                 <span class="icon">
                   <i class="fa fa-github"></i>
@@ -77,32 +60,38 @@
                 <span>Log Out</span>
               </button>
             </span>
-          </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
         </div>
-      </div>
-    </nav>
-  </div>
 
-    <div class="container has-text-centered formargin" id="games">
+        <div class="container has-text-centered formargin" id="games">
 
 
+            <div class="card to_left g_box" onclick='to_room("${gamename}")'>
+                <div class="card-image">
+                    <img src="${gameimg}"
+                         class="g_image" alt="Placeholder image">
+                </div>
+                <div class="card-content G_name">
+                    ${gamename}
+                </div>
+            </div>
 
 
+        </div>
 
-
-
-  </div>
-
-  <div class="hero-foot">
-    <nav class="tabs is-boxed is-fullwidth">
-      <div class="container">
-        <ul style="float:right;">
-            <a href="/makegamelist">게임목록추가</a>
-        </ul>
-      </div>
-    </nav>
-  </div>
-</section>
+        <div class="hero-foot">
+            <nav class="tabs is-boxed is-fullwidth">
+                <div class="container">
+                    <ul style="float:right;">
+                        <a href="/makegamelist">게임목록추가</a>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </section>
 </div>
 
 </body>
