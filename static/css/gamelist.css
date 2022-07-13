@@ -1,4 +1,12 @@
 
+*{
+    font-family: 'Gamja Flower', cursive;
+}
+
+.navbar-item{
+    font-size: 30px;
+}
+
 .luffy {
     max-height: 200%;
     height: border-box;
