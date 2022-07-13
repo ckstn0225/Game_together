@@ -86,7 +86,7 @@ function get_games() {
 
 //방으로 이동 시 방번호 지정
 function to_room(game) {
-                window.location.href = `/posting/${game}`
+               window.location.href = `/posting/${game}?img=${img}`
             }
 
 
