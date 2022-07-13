@@ -16,6 +16,8 @@
 
 .G_name {
     font-size: 25px;
+    padding-top: 5px ;
+    padding-bottom: 10px;
 }
 
 .g_box {
@@ -28,3 +30,6 @@
     height: 150px;
 }
 
+.b_jump {
+    margin-left 10px;
+}

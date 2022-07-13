@@ -56,7 +56,7 @@ function get_games() {
 
                     let html_temp = ``
                     if(gameimg.indexOf('file') == -1) {
-                        html_temp = `<div class="card to_left g_box" onclick='to_room("${gamename}")'>                    
+                        html_temp = `<div class="card to_left g_box">                    
                                         <div class="card-image">
                                             <img src="${gameimg}"
                                                  class="g_image" alt="Placeholder image">
@@ -64,9 +64,10 @@ function get_games() {
                                         <div class="card-content G_name">
                                             ${gamename}
                                         </div>
+                                        <button class="button is-info b_jump" onclick='to_room("${gamename}")'>채널접속</button>
                                     </div>`
                     } else {
-                        html_temp = `<div class="card to_left g_box" onclick='to_room("${gamename}")'>
+                        html_temp = `<div class="card to_left g_box">
                                         <div class="card-image">
                                             <img src="../static/img/${gameimg}"
                                                  class="g_image" alt="Placeholder image">
@@ -74,6 +75,7 @@ function get_games() {
                                         <div class="card-content G_name">
                                             ${gamename}
                                         </div>
+                                        <button class="button is-info b_jump" onclick='to_room("${gamename}")'>채널접속</button>
                                     </div>`
                     }
                     $("#games").append(html_temp)
