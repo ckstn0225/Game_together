@@ -1,4 +1,5 @@
 let isGameChecked = false;
+let tempGamename ="";
 let result = false;
 
 $(document).ready(function () {
@@ -27,6 +28,7 @@ function game_check() {
         $('#help-game').text("게임명칭을 입력해주세요.").removeClass("is-safe").addClass("is-danger")
         return;
     }
+    tempGamename = game
 
     $.ajax({
         type: "POST",
@@ -61,6 +63,10 @@ function game_add() {
         $('#help-image').text("이미지를 추가해주세요.").removeClass("is-safe").addClass("is-danger")
         return;
     } else if (isGameChecked == false) {
+        alert("게임명칭 중복체크를 해주세요.")
+        $('#help-game').text("게임명칭 중복체크를 해주세요.").removeClass("is-safe").addClass("is-danger")
+        return;
+    } else if (tempGamename != game) {
         alert("게임명칭 중복체크를 해주세요.")
         $('#help-game').text("게임명칭 중복체크를 해주세요.").removeClass("is-safe").addClass("is-danger")
         return;
