@@ -1,4 +1,3 @@
-
 <h1 align="center">1주차 미니프로젝트 "Game_together"</h1>
 <h4 align="center">2022.07.11 ~ 2022.07.14</h4>
 <br>
@@ -7,7 +6,7 @@
 
 <h3><b> 프로젝트 소개 </b></h3>
 게임을 하고 싶지만 혼자 게임을 즐기기 외로울 때 같이 할 친구를 찾기 위해 만든 프로젝트입니다.
-<br><br> 
+<br><br>
 
 <h3><b> 프로젝트 시연영상 </b></h3>
 ""
@@ -39,11 +38,13 @@
 /static
   └──/css
      ├── /gamelist.css
-     └── /main.css
+     ├── /main.css
+     └── /makegmaelist.css
   └──/img
   └──/js
      ├── /gamelist.js
-     └── /login.js
+     ├── /login.js
+     └── /makegmaelist.js
 /templates
   ├── /gamelist.html
   ├── /login.html
@@ -82,43 +83,48 @@
         <td width="31%"><b>Response</b></td>
     </tr>
     <tr>
-        <td width="12%">메인화면 페이지 로드</td>
+        <td width="12%">게임 목록 페이지 로드</td>
         <td width="5%">GET</td>
         <td width="12%">/</td>
         <td width="30%"></td>
-        <td width="31%">Token 검증됨 - render_template("layout_postlist.html", postdata=postdata)<br>Token 검증 안됨 - url_for("login", msg="로그인 정보가 존재하지 않습니다.")</td>
+        <td width="31%">Token 검증 - render_template('gamelist.html', user_info=user_info, user_nick=user_nick)<br>Token 시간 만료시 - redirect(url_for("in_home", msg="로그인 시간이 만료되었습니다."))
+Token 미검증 - redirect(url_for("in_home"))</td>
     </tr>
     <tr>
         <td width="12%">로그인 페이지 로드</td>
         <td width="5%">GET</td>
-        <td width="12%">/login</td>
+        <td width="12%">/home</td>
         <td width="30%">msg</td>
         <td width="31%">render_template('login.html', msg=msg)</td>
     </tr>
     <tr>
         <td width="12%">회원가입 페이지 로드</td>
         <td width="5%">GET</td>
-        <td width="12%">/joinMembership</td>
+        <td width="12%">/membership</td>
         <td width="30%"></td>
-        <td width="31%">render_template('join_membership.html')</td>
+        <td width="31%">render_template('membership.html')</td>
     </tr>
     <tr>
-        <td width="12%">글쓰기 페이지 로드</td>
+        <td width="12%">게임 목록 추가 페이지 로드</td>
         <td width="5%">GET</td>
-        <td width="12%">/writing</td>
+        <td width="12%">/makegamelist</td>
         <td width="30%"></td>
-        <td width="31%">Token 검증됨 - render_template('layout_writing.html')<br>Token 검증 안됨 - url_for("login", msg="로그인 정보가 존재하지 않습니다.")</td>
+        <td width="31%">Token 검증 - render_template('gamelist.html', user_info=user_info, user_nick=user_nick)
+Token 시간 만료시 - redirect(url_for("in_home", msg="로그인 시간이 만료되었습니다."))
+Token 미검증 - redirect(url_for("in_home"))</td>
     </tr>
     <tr>
-        <td width="12%">회원가입</td>
-        <td width="5%">POST</td>
-        <td width="12%">/signUp</td>
-        <td width="30%">{'id': user_id,  'pw': user_password}</td>
-        <td width="31%">{'msg': '회원가입이 완료되었습니다.'}</td>
+        <td width="12%">게임 채널 페이지 로드</td>
+        <td width="5%">GET</td>
+        <td width="12%">/posting/<keyword></td>
+        <td width="30%"></td>
+        <td width="31%">Token 검증 - render_template('gamelist.html', user_info=user_info, user_nick=user_nick)
+Token 시간 만료시 - redirect(url_for("in_home", msg="로그인 시간이 만료되었습니다."))
+Token 미검증 - redirect(url_for("in_home"))</td>
     </tr>
     <tr>
-        <td width="12%">ID 중복검사</td>
-        <td width="5%">POST</td>
+        <td width="12%">로그인</td>
+        <td width="5%">/api/login</td>
         <td width="12%">/check_dup</td>
         <td width="30%">{'id': check_id}</td>
         <td width="31%">중복 시 - {'msg': "사용 가능한 아이디 입니다."}<br>중복 아닐 시 - {'exists': "이미 존재하는 아이디 입니다."}</td>
