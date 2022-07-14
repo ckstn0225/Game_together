@@ -34,28 +34,23 @@
 
 </head>
 
-
+<body style="width:100vw">
 <section class="hero is-info is-large">
     <div class="hero-head">
         <nav class="navbar">
             <div class="container">
-                <div class="navbar-brand is-light">
+                <div class="navbar-brand is-light" style="float:left;">
                     <a class="navbar-item">
                         Game_together
                     </a>
-
                 </div>
-                <div id="navbarMenuHeroB" class="navbar-menu">
-                    <div class="navbar-end">
-                        <a type="button" class="navbar-item" onclick='$("#modal").addClass("is-active")'>
-                            어서오세요! {{ user_nick }}님!
-                        </a>
-                        <span class="navbar-item">
-
-            </span>
+                    <div class="navbar-end" style="float:right;">
+                    <a type="button" class="navbar-item" style="float:right;"
+                       onclick='$("#modal").addClass("is-active")'>
+                        어서오세요! {{ user_nick }}님!
+                    </a>
                     </div>
                 </div>
-            </div>
         </nav>
     </div>
 </section>
