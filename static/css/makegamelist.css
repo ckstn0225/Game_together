@@ -41,3 +41,26 @@
     height: 140px;
     margin: 10px auto;
 }
+
+/*footer를 페이지 하단에 붙이기*/
+html, body {
+    height: 100%;
+}
+
+.is-large {
+    position: absolute;
+    width: 100%;
+}
+
+.wrap {
+    height: auto;
+    min-height: 100%;
+    position: relative;
+    padding-top: 61px;
+    padding-bottom: 168px;
+}
+.footer {
+    width: 100%;
+    position: absolute;
+    transform: translateY(-100%);
+}
