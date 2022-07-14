@@ -3,8 +3,9 @@ $(document).ready(function () {
     get_games()
 })
 
-
 function get_games() {
+    let today = new Date()
+    let todate = Date.parse(today)
     $.ajax({
             type: "GET",
             url: `/game`,
@@ -12,20 +13,18 @@ function get_games() {
             success: function (response) {
                 let posts = response[0]['games']
                 let rooms = response[1]['rooms']
-                console.log(posts)
-                console.log(rooms)
                 for (let i = 0; i < posts.length; i++) {
                     let gamename = posts[i]['G_name']
                     let gameimg = posts[i]['Img']
                     let count = 0;
                     for(let i=0; i < rooms.length; i++) {
-                        if (rooms[i]['gname'] == gamename) {
+                        let rotime = Date.parse(rooms[i]['date']+" "+rooms[i]['time'])
+                        if (rooms[i]['gname'] == gamename & todate < rotime) {
                             count++;
                         }
                     }
-                    console.log(rooms[i])
 
-                    console.log(gamename)
+
                     let html_temp = ``
 
                     if(gameimg.indexOf('file') == -1) {
