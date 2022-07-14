@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
-app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
+app.config['UPLOAD_FOLDER'] = "./static/img"
 
 SECRET_KEY = 'SPARTA'
 
