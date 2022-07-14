@@ -54,52 +54,43 @@
         </nav>
     </div>
 </section>
-<div class="container has-text-centered formargin" id="games">
+<div class="wrap" id="wrap">
+    <div class="container has-text-centered formargin" id="games">
 
-    <div class="modal" style="" id="modal">
-        <div class="modal-background"></div>
-        <div class="modal-content">
-            <div class="card">
-                <div class="card-content">
-                    <p class="title" style="color:black">
+        <div class="modal" style="" id="modal">
+            <div class="modal-background"></div>
+            <div class="modal-content">
+                <div class="card">
+                    <div class="card-content">
+                        <p class="title" style="color:black">
+                            <br>
+                        <p style="font-size: 50px;">
+                            {{ user_nick }}({{ user_id }})</p>
                         <br>
-                    <p style="font-size: 50px;">
-                        {{ user_nick }}({{ user_id }})</p>
-                    <br>
-                    <br>
-                    <br>
-                    </p>
+                        <br>
+                        <br>
+                        </p>
+                    </div>
+                    <footer class="card-footer">
+                        <p class="card-footer-item">
+          <span>
+              <a onclick="sign_out()">로그아웃 하기</a>
+          </span>
+                        </p>
+                        <p class="card-footer-item">
+          <span>
+            <a onclick='$("#modal").removeClass("is-active")'>취소</a>
+          </span>
+                        </p>
+                    </footer>
                 </div>
-                <footer class="card-footer">
-                    <p class="card-footer-item">
-      <span>
-          <a onclick="sign_out()">로그아웃 하기</a>
-      </span>
-                    </p>
-                    <p class="card-footer-item">
-      <span>
-        <a onclick='$("#modal").removeClass("is-active")'>취소</a>
-      </span>
-                    </p>
-                </footer>
             </div>
+            <button class="modal-close is-large" aria-label="close" onclick='$("#modal").removeClass("is-active")'></button>
         </div>
-        <button class="modal-close is-large" aria-label="close" onclick='$("#modal").removeClass("is-active")'></button>
+
     </div>
-
 </div>
-
-<div class="hero-foot" style="clear:both; height: 800px;">
-    <nav class="tabs is-boxed is-fullwidth">
-        <div class="container">
-            <ul style="float:right;">
-                <button onclick="makegamelist()" class="button" style="font-family: 'Gamja Flower', cursive;">게임목록추가
-                </button>
-            </ul>
-        </div>
-    </nav>
-</div>
-<footer class="footer" style="margin-top: 20px; background-color: lightskyblue; height: 150px">
+<footer class="footer" style="background-color: lightskyblue; height: 150px">
     <div class="content has-text-centered">
         <p>
             <strong>Game_Together</strong> by <a href="https://github.com/ckstn0225/game_together">Sparta A club fourth

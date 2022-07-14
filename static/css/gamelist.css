@@ -47,5 +47,29 @@
     font-family: 'Gamja Flower', cursive;
 }
 .item:hover {
-    filter:brightness(75%);
+    filter: brightness(75%);
+}
+/*footer를 페이지 하단에 붙이기*/
+html, body {
+    height: 100%;
+}
+
+.is-large {
+    position: absolute;
+    width: 100vw;
+}
+
+.wrap {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    min-height: 100%;
+    position: relative;
+    padding-top: 107px;
+    padding-bottom: 130px;
+}
+.footer {
+    width: 100vw;
+    position: absolute;
+    transform: translateY(-100%);
 }

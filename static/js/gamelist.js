@@ -56,6 +56,15 @@ function get_games() {
                     $("#games").append(html_temp)
 
                 }
+                let footer_html = `<nav class="tabs is-boxed is-fullwidth" style="margin-bottom: 40px">
+                                    <div class="container">
+                                        <ul style="float:right;">
+                                            <button onclick="makegamelist()" class="button" style="font-family: 'Gamja Flower', cursive;">게임목록추가
+                                            </button>
+                                        </ul>
+                                    </div>
+                                </nav>`
+                $('#wrap').append(footer_html)
             }
         }
     )
