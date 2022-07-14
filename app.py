@@ -101,8 +101,9 @@ def gamelist():
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.user.find_one({"u_id": payload["id"]})
+        user_id = user_info['u_id']
         user_nick = user_info['nick']
-        return render_template('gamelist.html', result="success", user_nick=user_nick)
+        return render_template('gamelist.html', user_info=user_info, user_nick=user_nick, user_id=user_id)
     except jwt.ExpiredSignatureError:
         return redirect(url_for("in_home", msg="권한이 없습니다."))
     except jwt.exceptions.DecodeError:
@@ -115,8 +116,9 @@ def mkgame():
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.user.find_one({"u_id": payload["id"]})
+        user_id = user_info['u_id']
         user_nick = user_info['nick']
-        return render_template('makegamelist.html', result="success", user_nick=user_nick)
+        return render_template('makegamelist.html', user_info=user_info, user_nick=user_nick, user_id=user_id)
     except jwt.ExpiredSignatureError:
         return redirect(url_for("in_home", msg="권한이 없습니다."))
     except jwt.exceptions.DecodeError:
