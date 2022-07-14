@@ -17,7 +17,7 @@
 .is-large {
     min-height: border-box;
     max-height: border-box;
-    height: 100px;
+    height: auto;
 }
 
 .mini-title {
@@ -40,8 +40,4 @@
     width: auto;
     height: 140px;
     margin: 10px auto;
-}
-
-.is-info {
-    margin-top: 10px;
 }
