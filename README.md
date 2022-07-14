@@ -10,12 +10,25 @@
 
 <h3><b> 프로젝트 시연영상 </b></h3>
 <iframe width="640" height="360" src="https://www.youtube.com/embed/kTcRRaXV-fg?ecver=1"  
- frameborder="0" allow="autoplay; encrypted-media" allowfullscreen> </iframe>  
+frameborder="0" allow="autoplay; encrypted-media" allowfullscreen> </iframe>
 ---
 
 <br>
 <h3 align="center"><b>🛠 사용된 스택기술 🛠</b></h3>
 <p align="center">
+<img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
+<img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
+<img src="https://img.shields.io/badge/jquery-0769AD?style=for-the-badge&logo=jquery&logoColor=white">
+<img src="https://img.shields.io/badge/html-E34F26?style=for-the-badge&logo=html5&logoColor=white">
+<img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white">
+<img src="https://img.shields.io/badge/linux-FCC624?style=for-the-badge&logo=linux&logoColor=black">
+<img src="https://img.shields.io/badge/aws-232F3E?style=for-the-badge&logo=aws&logoColor=white">
+</br>
+<img src="https://img.shields.io/badge/Python-F80000?style=for-the-badge&logo=Python&logoColor=white">
+<img src="https://img.shields.io/badge/Flask-4FC08D?style=for-the-badge&logo=Flask&logoColor=white">
+<img src="https://img.shields.io/badge/Jinja-7952B3?style=for-the-badge&logo=Jinja&logoColor=white">
+<img src="https://img.shields.io/badge/MongoDB-61DAFB?style=for-the-badge&logo=MongoDB&logoColor=white">
+
 
 
 <br><br>
@@ -39,7 +52,8 @@
   └──/css
      ├── /gamelist.css
      ├── /main.css
-     └── /makegmaelist.css
+     ├── /makegmaelist.css
+     └── /posting.css
   └──/img
   └──/js
      ├── /gamelist.js
@@ -51,7 +65,6 @@
   ├── /makegamelist.html
   ├── /membership.html
   └── /posting.html
-
 ├── /README.md
 ├── /app.py
 </code>
@@ -243,6 +256,18 @@ v
 ---
 
 <h3 align="center"><b>멤버</b></h3>
+<table Width="100%">
+    <tr align="center">
+        <td width="20%" style="font-size: 20px;"><img src="https://img.shields.io/badge/ROLE-member-lightgrey"><br>김 혜 진</td>
+        <td width="20%" style="font-size: 20px;"><img src="https://img.shields.io/badge/ROLE-member-lightgrey"><br>이 근 영</td>
+        <td width="20%" style="font-size: 20px;"><img src="https://img.shields.io/badge/ROLE-leader-red"><br>이 회 섭</td>
+        <td width="20%" style="font-size: 20px;"><img src="https://img.shields.io/badge/ROLE-member-lightgrey"><br>조 원 영</td>
+    </tr>
+        <td width="20%" style="font-size: 20px;" align="center">SPARTA 항해99 A조 4팀 REACT 교육생</td>
+        <td width="20%" style="font-size: 20px;" align="center">SPARTA 항해99 A조 4팀 SPRING 교육생</td>
+        <td width="20%" style="font-size: 20px;" align="center">SPARTA 항해99 A조 4팀 SPRING 교육생</td>
+        <td width="20%" style="font-size: 20px;" align="center">SPARTA 항해99 A조 4팀 SPRING 교육생</td>
+</table>
 
 ---
 
