@@ -42,6 +42,10 @@
     margin: 10px auto;
 }
 
+.item:hover {
+    filter: brightness(75%);
+}
+
 /*footer를 페이지 하단에 붙이기*/
 html, body {
     height: 100%;
@@ -49,15 +53,15 @@ html, body {
 
 .is-large {
     position: absolute;
-    width: 100%;
+    width: 100vw;
 }
 
 .wrap {
     height: auto;
     min-height: 100%;
     position: relative;
-    padding-top: 61px;
-    padding-bottom: 168px;
+    padding-top: 107px;
+    padding-bottom: 150px;
 }
 .footer {
     width: 100%;
