@@ -13,7 +13,7 @@ SECRET_KEY = 'SPARTA'
 
 from pymongo import MongoClient
 
-client = MongoClient('mongodb://43.200.1.214', 27017, username="test", password="test")
+client = MongoClient('mongodb://3.88.27.49', 27017, username="test", password="test")
 db = client.dbsparta_plus_week4
 
 
