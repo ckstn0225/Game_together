@@ -209,7 +209,7 @@
         }
 
         function participate(id) {
-            let nick = $('#nick').text()
+            let nick = "{{ user_nick }}"
             $.ajax({
                 type: "POST",
                 url: "/room/in",
@@ -222,7 +222,7 @@
         }
 
         function leave(id){
-            let nick = $('#nick').text()
+            let nick = "{{ user_nick }}"
             $.ajax({
                 type: "POST",
                 url: "/room/out",
