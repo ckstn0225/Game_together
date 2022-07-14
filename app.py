@@ -290,8 +290,9 @@ def game_post():
     game_receive = request.form['game_give']
 
     file = request.files["file_give"]
+    filename = secure_filename(file.filename)
 
-    extension = file.filename.split('.')[-1]
+    extension = filename.split('.')[-1]
     today = datetime.now()
     mytime = today.strftime('%Y-%m-%d-%H-%M-%S')
     filename = f'file-{mytime}'
