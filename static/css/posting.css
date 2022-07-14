@@ -1,0 +1,86 @@
+* {
+    font-family: 'Gamja Flower', cursive;
+    font-size: x-large;
+}
+
+.top {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.login {
+    justify-content: right;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.back-btn {
+    justify-content: left;
+
+    margin-left: 10px;
+    height: 50px;
+    width: 150px;
+    border-radius: 20px;
+
+    background-color: transparent;
+    border: 2px solid black;
+}
+
+.back-btn:hover {
+    border: 3px solid black;
+}
+
+.img-box {
+    height: 330px;
+    width: 250px;
+
+    background-position: center;
+    background-size: cover;
+
+}
+
+.input-box {
+    height: 380px;
+    width: 680px;
+    padding-top: 100px;
+}
+
+.input-g {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.card-right > button {
+    margin: 10px auto 10px auto;
+    height: 100px;
+    width: 160px;
+}
+
+.box {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.btns {
+    margin: auto;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.box {
+    margin: 20px auto 0px auto;
+    max-width: 1000px;
+}

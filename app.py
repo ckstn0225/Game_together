@@ -137,8 +137,9 @@ def posting(keyword):
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.user.find_one({"u_id": payload["id"]})
         user_nick = user_info['nick']
+        user_id = user_info['u_id']
         game_name = keyword
-        return render_template('posting.html', user_info=user_info, user_nick=user_nick, game_name=game_name)
+        return render_template('posting.html', user_info=user_info, user_nick=user_nick, game_name=game_name, user_id=user_id)
     except jwt.ExpiredSignatureError:
         return redirect(url_for("in_home", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
