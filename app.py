@@ -312,7 +312,8 @@ def game_post():
 @app.route("/game", methods=["GET"])
 def game_get():
     game_list = list(db.games.find({}, {'_id': False}))
-    return jsonify({'games': game_list})
+    room_list = list(db.room.find({}, {'_id': False}))
+    return jsonify({'games': game_list}, {'rooms':room_list})
 
 # 중복체크(게임명칭)
 @app.route('/game/name', methods=['POST'])

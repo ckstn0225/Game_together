@@ -10,13 +10,24 @@ function get_games() {
             url: `/game`,
             data: {},
             success: function (response) {
-                let posts = response['games']
+                let posts = response[0]['games']
+                let rooms = response[1]['rooms']
                 console.log(posts)
+                console.log(rooms)
                 for (let i = 0; i < posts.length; i++) {
                     let gamename = posts[i]['G_name']
                     let gameimg = posts[i]['Img']
+                    let count = 0;
+                    for(let i=0; i < rooms.length; i++) {
+                        if (rooms[i]['gname'] == gamename) {
+                            count++;
+                        }
+                    }
+                    console.log(rooms[i])
 
+                    console.log(gamename)
                     let html_temp = ``
+
                     if(gameimg.indexOf('file') == -1) {
                         html_temp = `<div class="card to_left g_box">                    
                                         <div class="card-image">
@@ -27,6 +38,7 @@ function get_games() {
                                             ${gamename}
                                         </div>
                                         <button class="button is-info b_jump" onclick='to_room("${gamename}")'>채널접속</button>
+                                    <div>현재 게임방 ${count}개</div>
                                     </div>`
                     } else {
                         html_temp = `<div class="card to_left g_box">
@@ -38,6 +50,7 @@ function get_games() {
                                             ${gamename}
                                         </div>
                                         <button class="button is-info b_jump" onclick='to_room("${gamename}")'>채널접속</button>
+                                    <div>현재 게임방 ${count}개</div>
                                     </div>`
                     }
                     $("#games").append(html_temp)
