@@ -46,3 +46,6 @@
 .button {
     font-family: 'Gamja Flower', cursive;
 }
+.item:hover {
+    filter:brightness(75%);
+}
