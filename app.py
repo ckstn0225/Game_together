@@ -186,7 +186,7 @@ def room_post():
 
 @app.route("/room", methods=["GET"])
 def room_get():
-    room_list = list(db.room.find({}, {'_id': False}))
+    room_list = list(db.room.find({},{'_id': False}).sort("date", -1))
     return jsonify({'room': room_list})
 
 
